@@ -1,0 +1,5 @@
+// Identifiers shared by Debug and Release. These must match App Store Connect
+// and the RevenueCat dashboard exactly before an on-device sandbox test.
+REVENUECAT_MONTHLY_PRODUCT_ID = com.sujal.Offset.premium.monthly
+REVENUECAT_ANNUAL_PRODUCT_ID = com.sujal.Offset.premium.annual
+REVENUECAT_ENTITLEMENT_ID = premium

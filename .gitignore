@@ -1,0 +1,7 @@
+# Machine-specific integration credentials. Copy the example and keep the real
+# values out of source control.
+Offset/Configuration/Secrets.xcconfig
+
+xcuserdata/
+DerivedData/
+.DS_Store

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "770F5ACB-14FD-4B60-B50F-AD56C67A37E6",
+        "deviceName" : "iPhone 16",
+        "exportedFileName" : "947BCB40-FF7D-4C1F-9C0C-80305F2F9180.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Offset-Premium-Review_0_71B917C7-CC07-442C-8F39-1E35540E6553.png",
+        "timestamp" : 1789439397.438
+      }
+    ],
+    "testIdentifier" : "OffsetUITests/testCapturePaywallReviewScreenshot()",
+    "testIdentifierURL" : "test://com.apple.xcode/Offset/OffsetUITests/OffsetUITests/testCapturePaywallReviewScreenshot"
+  }
+]

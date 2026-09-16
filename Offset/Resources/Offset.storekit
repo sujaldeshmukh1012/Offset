@@ -1,0 +1,85 @@
+{
+  "identifier" : "32DA15A4-89FB-49B0-AEFF-E5E90D9AA56A",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "",
+    "_developerTeamID" : "R468B3M52S",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "F44E9ED9-81D4-4721-AAD0-4B73DF6E790A",
+      "localizations" : [
+
+      ],
+      "name" : "Offset Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "AC8429B8-7C7E-4E36-AFC9-AF47CF122648",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlock complete incentive savings, checklists, and unlimited saved projects.",
+              "displayName" : "Offset Premium Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.sujal.Offset.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Offset Premium Monthly",
+          "subscriptionGroupID" : "F44E9ED9-81D4-4721-AAD0-4B73DF6E790A",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "886DC73A-1E50-4348-B073-509FC563797B",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlock complete incentive savings, checklists, and unlimited saved projects.",
+              "displayName" : "Offset Premium Annual",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.sujal.Offset.premium.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Offset Premium Annual",
+          "subscriptionGroupID" : "F44E9ED9-81D4-4721-AAD0-4B73DF6E790A",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

@@ -1,0 +1,12 @@
+#include "Shared.xcconfig"
+
+// Supply real production values in the ignored Secrets.xcconfig before
+// archiving. AppConfiguration does not initialize either SDK while empty.
+REVENUECAT_API_KEY =
+ONESIGNAL_APP_ID =
+
+APS_ENVIRONMENT = production
+SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+
+// Local values take precedence over the checked-in empty production values.
+#include? "Secrets.xcconfig"

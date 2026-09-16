@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://offset.local/schemas/programs-v1.schema.json",
+  "title": "Offset Program Catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "programs"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "programs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/program" }
+    }
+  },
+  "$defs": {
+    "money": { "type": "number", "exclusiveMinimum": 0 },
+    "program": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "level", "benefitType", "status", "projectTypes",
+        "amountType", "eligibilityStates", "eligibilityUtilities",
+        "eligibleHomeOccupancies", "eligibleVehicleConditions", "incomeCapsUSD",
+        "vehiclePriceCapsUSD", "annualCaps", "effectiveDate", "deadline",
+        "sourceURL", "lastVerifiedDate", "eligibilitySummary", "claimSteps", "description"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "level": { "enum": ["federal", "state", "utility", "regional", "local"] },
+        "benefitType": { "enum": ["rebate", "pointOfSaleDiscount", "nonrefundableTaxCredit", "refundableTaxCredit", "salesTaxExemption", "propertyTaxExclusion", "nonCash"] },
+        "status": { "enum": ["active", "dynamic", "waitlist", "discovery", "paused", "closed"] },
+        "projectTypes": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "enum": ["heatPump", "evPurchase", "evCharger", "insulation", "solar", "waterHeater", "batteryStorage", "windows", "ductwork", "weatherization"] }
+        },
+        "amountType": { "$ref": "#/$defs/amount" },
+        "eligibilityStates": {
+          "type": "array", "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z]{2}$" }
+        },
+        "eligibilityUtilities": {
+          "type": "array", "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "eligibleHomeOccupancies": {
+          "type": "array", "uniqueItems": true,
+          "items": { "enum": ["homeownerPrimaryResidence", "homeownerSecondaryResidence", "renterPrimaryResidence"] }
+        },
+        "eligibleVehicleConditions": {
+          "type": "array", "uniqueItems": true,
+          "items": { "enum": ["new", "used"] }
+        },
+        "incomeCapsUSD": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "singleOrOther": { "$ref": "#/$defs/money" },
+            "headOfHousehold": { "$ref": "#/$defs/money" },
+            "marriedFilingJointly": { "$ref": "#/$defs/money" }
+          }
+        },
+        "vehiclePriceCapsUSD": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "car": { "$ref": "#/$defs/money" },
+            "suvPickupOrVan": { "$ref": "#/$defs/money" },
+            "usedVehicle": { "$ref": "#/$defs/money" }
+          }
+        },
+        "annualCaps": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["group", "amountUSD", "description"],
+            "properties": {
+              "group": { "type": "string", "minLength": 1 },
+              "amountUSD": { "$ref": "#/$defs/money" },
+              "description": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "effectiveDate": { "type": "string", "format": "date-time" },
+        "deadline": { "type": ["string", "null"], "format": "date-time" },
+        "sourceURL": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "lastVerifiedDate": { "type": "string", "format": "date-time" },
+        "eligibilitySummary": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "claimSteps": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    },
+    "amount": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": { "const": "percentage" },
+            "value": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type", "value"],
+          "properties": {
+            "type": { "const": "fixedAmount" },
+            "value": { "type": "number", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type", "value", "percentage"],
+          "properties": {
+            "type": { "const": "upTo" },
+            "value": { "type": "number", "minimum": 0 },
+            "percentage": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "const": "range" },
+            "minimum": { "type": ["number", "null"], "minimum": 0 },
+            "maximum": { "type": ["number", "null"], "minimum": 0 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type", "explanation"],
+          "properties": {
+            "type": { "enum": ["formula", "taxBenefit", "nonCash"] },
+            "explanation": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "const": "unknown" }
+          }
+        }
+      ]
+    }
+  }
+}
