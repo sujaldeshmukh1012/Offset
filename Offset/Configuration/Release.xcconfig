@@ -2,8 +2,12 @@
 
 // Supply real production values in the ignored Secrets.xcconfig before
 // archiving. AppConfiguration does not initialize either SDK while empty.
+// Public URLs are also required so the paywall and Settings can open the
+// externally hosted policies supplied to App Review.
 REVENUECAT_API_KEY =
 ONESIGNAL_APP_ID =
+PRIVACY_POLICY_URL =
+SUPPORT_URL =
 
 APS_ENVIRONMENT = production
 SWIFT_TREAT_WARNINGS_AS_ERRORS = YES

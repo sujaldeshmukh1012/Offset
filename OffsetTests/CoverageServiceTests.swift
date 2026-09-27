@@ -37,7 +37,7 @@ struct CoverageServiceTests {
         )
         let result = CoverageService.assessment(for: .heatPump, profile: profile, dataset: try dataset)
 
-        #expect(result.confidence == .verified)
+        #expect(result.confidence == .partial)
         #expect(!result.isProductionMarket)
         #expect(result.message.contains("partial-coverage market"))
     }

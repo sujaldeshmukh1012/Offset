@@ -8,7 +8,7 @@ struct OnboardingFlowView: View {
     @FocusState private var isZIPFieldFocused: Bool
 
     init(profile: UserProfile?) {
-        let locations = (try? LocationService.bundled()) ?? .empty
+        let locations = (try? LocationService.current()) ?? .empty
         _model = StateObject(wrappedValue: OnboardingViewModel(profile: profile, locations: locations))
     }
 
@@ -433,7 +433,7 @@ private struct WelcomeLedgerPreview: View {
                 }
             }
             .padding(15)
-            .background(Color(light: 0x0D2137, dark: 0x0D2137), in: RoundedRectangle(cornerRadius: 13))
+            .background(Color(hex: 0x0D2137), in: RoundedRectangle(cornerRadius: 13))
         }
         .offsetCard(padding: 14, elevated: true)
         .accessibilityElement(children: .combine)

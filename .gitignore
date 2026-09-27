@@ -5,3 +5,4 @@ Offset/Configuration/Secrets.xcconfig
 xcuserdata/
 DerivedData/
 .DS_Store
+supabase/.temp/

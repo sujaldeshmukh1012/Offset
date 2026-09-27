@@ -1,41 +1,41 @@
 import SwiftUI
 
 enum OffsetTheme {
-    static let navy = Color(light: 0x12345B, dark: 0xB8D4FF)
-    static let navyDeep = Color(light: 0x092342, dark: 0xE6EEFF)
-    static let emerald = Color(light: 0x155EEF, dark: 0x7CABFF)
-    static let emeraldBright = Color(light: 0xFFC83D, dark: 0xFFD66B)
-    static let text = Color(light: 0x172B3A, dark: 0xF1F5F9)
-    static let secondaryText = Color(light: 0x536474, dark: 0xB7C4D1)
-    static let canvas = Color(light: 0xF5F7FA, dark: 0x0B1320)
-    static let surfaceLow = Color(light: 0xF8FAFC, dark: 0x101B2B)
-    static let surface = Color(light: 0xFFFFFF, dark: 0x162235)
-    static let surfaceHigh = Color(light: 0xEAF1FF, dark: 0x223654)
-    static let outline = Color(light: 0xD5DDE7, dark: 0x41516A)
-    static let error = Color(light: 0xB42318, dark: 0xFF8A80)
-    static let savingsTint = Color(light: 0xFFF4C2, dark: 0x493B13)
+    static let navy = Color(hex: 0x12345B)
+    static let navyDeep = Color(hex: 0x092342)
+    static let inverseSurface = Color(hex: 0x092342)
+    static let emerald = Color(hex: 0x155EEF)
+    static let emeraldBright = Color(hex: 0xFFC83D)
+    static let gold = Color(hex: 0xB8860B)
+    static let text = Color(hex: 0x172B3A)
+    static let secondaryText = Color(hex: 0x536474)
+    static let mutedText = Color(hex: 0x758391)
+    static let canvas = Color(hex: 0xF7F5F0)
+    static let surfaceLow = Color(hex: 0xFAFAF8)
+    static let surface = Color(hex: 0xFFFFFF)
+    static let surfaceHigh = Color(hex: 0xEDF3FF)
+    static let outline = Color(hex: 0xDDE2E7)
+    static let divider = Color(hex: 0xE8EBEE)
+    static let success = Color(hex: 0x157347)
+    static let warning = Color(hex: 0x9A6700)
+    static let error = Color(hex: 0xB42318)
+    static let savingsTint = Color(hex: 0xFFF3C4)
+
+    static let cardRadius: CGFloat = 18
+    static let imageRadius: CGFloat = 15
+    static let cardPadding: CGFloat = 18
+    static let screenMargin: CGFloat = 20
+    static let sectionSpacing: CGFloat = 28
 }
 
 struct OffsetLogoMark: View {
     var size: CGFloat = 36
 
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: size * 0.24, style: .continuous)
-                .fill(OffsetTheme.emerald)
-            Capsule()
-                .fill(Color.white.opacity(0.28))
-                .frame(width: size * 0.56, height: size * 0.14)
-                .offset(y: -size * 0.16)
-            Image(systemName: "arrow.down")
-                .font(.system(size: size * 0.25, weight: .bold))
-                .foregroundStyle(Color.white)
-                .offset(y: size * 0.02)
-            Capsule()
-                .fill(OffsetTheme.emeraldBright)
-                .frame(width: size * 0.44, height: size * 0.14)
-                .offset(y: size * 0.27)
-        }
+        Image("OffsetLogo")
+            .resizable()
+            .scaledToFit()
+            .clipShape(RoundedRectangle(cornerRadius: size * 0.22, style: .continuous))
         .frame(width: size, height: size)
         .accessibilityHidden(true)
     }
@@ -91,11 +91,12 @@ struct OffsetCardModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(padding)
-            .background(OffsetTheme.surface, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .background(OffsetTheme.surface, in: RoundedRectangle(cornerRadius: OffsetTheme.cardRadius, style: .continuous))
             .overlay {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(OffsetTheme.outline.opacity(elevated ? 1 : 0.72), lineWidth: 1)
+                RoundedRectangle(cornerRadius: OffsetTheme.cardRadius, style: .continuous)
+                    .stroke(OffsetTheme.outline.opacity(elevated ? 0.72 : 0.5), lineWidth: 1)
             }
+            .shadow(color: OffsetTheme.navyDeep.opacity(elevated ? 0.09 : 0.035), radius: elevated ? 18 : 8, y: elevated ? 8 : 3)
     }
 }
 
@@ -148,16 +149,107 @@ extension View {
     }
 }
 
+struct OffsetCard<Content: View>: View {
+    let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content.offsetCard(padding: OffsetTheme.cardPadding)
+    }
+}
+
+struct OffsetSectionHeader: View {
+    let title: String
+    var subtitle: String? = nil
+    var actionTitle: String? = nil
+    var action: (() -> Void)? = nil
+
+    var body: some View {
+        HStack(alignment: .bottom, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.title3.weight(.bold))
+                    .foregroundStyle(OffsetTheme.text)
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .foregroundStyle(OffsetTheme.secondaryText)
+                }
+            }
+            Spacer()
+            if let actionTitle, let action {
+                Button(actionTitle, action: action)
+                    .font(.subheadline.weight(.semibold))
+            }
+        }
+    }
+}
+
+struct ProgramSourceBadge: View {
+    let level: ProgramLevel
+
+    var body: some View {
+        Text(level.shortDisplayName)
+            .font(.caption2.weight(.semibold))
+            .foregroundStyle(OffsetTheme.navy)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(OffsetTheme.surfaceHigh, in: Capsule())
+    }
+}
+
+struct CoverageBadge: View {
+    let assessment: CoverageAssessment
+
+    var body: some View {
+        Label(assessment.title, systemImage: icon)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(color)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 6)
+            .background(color.opacity(0.1), in: Capsule())
+            .accessibilityLabel("Coverage: \(assessment.title)")
+    }
+
+    private var icon: String {
+        switch assessment.confidence {
+        case .verified: "checkmark.shield.fill"
+        case .verifiedDynamic: "clock.badge.checkmark"
+        case .partial: "circle.lefthalf.filled"
+        case .discovery: "magnifyingglass"
+        case .unsupported: "questionmark.circle"
+        }
+    }
+
+    private var color: Color {
+        switch assessment.confidence {
+        case .verified: OffsetTheme.success
+        case .verifiedDynamic, .partial: OffsetTheme.warning
+        case .discovery, .unsupported: OffsetTheme.secondaryText
+        }
+    }
+}
+
+extension ProgramLevel {
+    var shortDisplayName: String {
+        switch self {
+        case .federal: "Federal"
+        case .state: "State"
+        case .utility: "Utility"
+        case .regional: "Regional"
+        case .local: "Local"
+        }
+    }
+}
+
 extension Color {
     init(hex: UInt32) {
         self.init(uiColor: UIColor(hex: hex))
     }
 
-    init(light: UInt32, dark: UInt32) {
-        self.init(uiColor: UIColor { traits in
-            UIColor(hex: traits.userInterfaceStyle == .dark ? dark : light)
-        })
-    }
 }
 
 private extension UIColor {

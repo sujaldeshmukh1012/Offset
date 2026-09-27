@@ -1,0 +1,266 @@
+{
+  "meta": {
+    "schema_version": "1",
+    "dataset_name": "Offset Public Bootstrap",
+    "generated_at": "1970-01-01T00:00:00Z",
+    "launch_states": "",
+    "source_policy": "Premium incentive records are delivered only after server-side entitlement verification.",
+    "matching_policy": "No premium incentive records are bundled.",
+    "warning": "Subscribe and connect to load verified incentive data."
+  },
+  "states": [
+    {
+      "code": "NY",
+      "name": "New York",
+      "coverage_status": "verified_major_territories",
+      "notes": "Deepest launch market. Major utilities plus statewide NYSERDA programs."
+    },
+    {
+      "code": "FL",
+      "name": "Florida",
+      "coverage_status": "partial",
+      "notes": "Launch coverage focused on FPL and Duke Energy Florida; statewide layer is thin."
+    },
+    {
+      "code": "CA",
+      "name": "California",
+      "coverage_status": "partial",
+      "notes": "Launch coverage focused on major IOUs and LADWP/SMUD; regional CCA/air-district layers remain partial."
+    }
+  ],
+  "utilities": [
+    {
+      "id": "ny_national_grid",
+      "state_code": "NY",
+      "name": "National Grid",
+      "utility_type": "investor_owned",
+      "domain": "nationalgridus.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_coned",
+      "state_code": "NY",
+      "name": "Con Edison",
+      "utility_type": "investor_owned",
+      "domain": "coned.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_nyseg",
+      "state_code": "NY",
+      "name": "NYSEG",
+      "utility_type": "investor_owned",
+      "domain": "nyseg.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_rge",
+      "state_code": "NY",
+      "name": "RG&E",
+      "utility_type": "investor_owned",
+      "domain": "rge.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_central_hudson",
+      "state_code": "NY",
+      "name": "Central Hudson",
+      "utility_type": "investor_owned",
+      "domain": "cenhud.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_oru",
+      "state_code": "NY",
+      "name": "Orange & Rockland",
+      "utility_type": "investor_owned",
+      "domain": "oru.com",
+      "supported": 1,
+      "notes": "NYS Clean Heat administrator/service territory."
+    },
+    {
+      "id": "ny_psegli",
+      "state_code": "NY",
+      "name": "PSEG Long Island",
+      "utility_type": "public_authority_operator",
+      "domain": "psegliny.com",
+      "supported": 1,
+      "notes": "Separate Long Island Home Comfort and EV programs."
+    },
+    {
+      "id": "fl_fpl",
+      "state_code": "FL",
+      "name": "Florida Power & Light",
+      "utility_type": "investor_owned",
+      "domain": "fpl.com",
+      "supported": 1,
+      "notes": "Primary Florida launch utility."
+    },
+    {
+      "id": "fl_duke",
+      "state_code": "FL",
+      "name": "Duke Energy Florida",
+      "utility_type": "investor_owned",
+      "domain": "duke-energy.com",
+      "supported": 1,
+      "notes": "Primary Florida launch utility."
+    },
+    {
+      "id": "fl_teco",
+      "state_code": "FL",
+      "name": "Tampa Electric",
+      "utility_type": "investor_owned",
+      "domain": "tampaelectric.com",
+      "supported": 0,
+      "notes": "Discovery-only for V1."
+    },
+    {
+      "id": "fl_jea",
+      "state_code": "FL",
+      "name": "JEA",
+      "utility_type": "municipal",
+      "domain": "jea.com",
+      "supported": 0,
+      "notes": "Discovery-only for V1."
+    },
+    {
+      "id": "fl_ouc",
+      "state_code": "FL",
+      "name": "Orlando Utilities Commission",
+      "utility_type": "municipal",
+      "domain": "ouc.com",
+      "supported": 0,
+      "notes": "Discovery-only for V1."
+    },
+    {
+      "id": "fl_gru",
+      "state_code": "FL",
+      "name": "Gainesville Regional Utilities",
+      "utility_type": "municipal",
+      "domain": "gru.com",
+      "supported": 0,
+      "notes": "Discovery-only for V1."
+    },
+    {
+      "id": "ca_pge",
+      "state_code": "CA",
+      "name": "Pacific Gas & Electric",
+      "utility_type": "investor_owned",
+      "domain": "pge.com",
+      "supported": 1,
+      "notes": "Major IOU."
+    },
+    {
+      "id": "ca_sce",
+      "state_code": "CA",
+      "name": "Southern California Edison",
+      "utility_type": "investor_owned",
+      "domain": "sce.com",
+      "supported": 1,
+      "notes": "Major IOU."
+    },
+    {
+      "id": "ca_sdge",
+      "state_code": "CA",
+      "name": "San Diego Gas & Electric",
+      "utility_type": "investor_owned",
+      "domain": "sdge.com",
+      "supported": 1,
+      "notes": "Major IOU."
+    },
+    {
+      "id": "ca_ladwp",
+      "state_code": "CA",
+      "name": "Los Angeles Department of Water and Power",
+      "utility_type": "municipal",
+      "domain": "ladwp.com",
+      "supported": 1,
+      "notes": "Municipal utility outside CPUC IOU structure."
+    },
+    {
+      "id": "ca_smud",
+      "state_code": "CA",
+      "name": "Sacramento Municipal Utility District",
+      "utility_type": "municipal",
+      "domain": "smud.org",
+      "supported": 1,
+      "notes": "Municipal utility outside CPUC IOU structure."
+    },
+    {
+      "id": "ca_socalgas",
+      "state_code": "CA",
+      "name": "Southern California Gas",
+      "utility_type": "investor_owned",
+      "domain": "socalgas.com",
+      "supported": 0,
+      "notes": "Useful for SGIP/heat-pump interactions; not a primary electric launch territory."
+    }
+  ],
+  "categories": [
+    {
+      "id": "heat_pump_hvac",
+      "name": "Heat Pump HVAC"
+    },
+    {
+      "id": "heat_pump_water_heater",
+      "name": "Heat Pump Water Heater"
+    },
+    {
+      "id": "ev_new",
+      "name": "New EV"
+    },
+    {
+      "id": "ev_used",
+      "name": "Used EV"
+    },
+    {
+      "id": "ev_charger",
+      "name": "EV Charger"
+    },
+    {
+      "id": "solar",
+      "name": "Solar"
+    },
+    {
+      "id": "battery_storage",
+      "name": "Battery Storage"
+    },
+    {
+      "id": "insulation",
+      "name": "Insulation"
+    },
+    {
+      "id": "windows",
+      "name": "Windows"
+    },
+    {
+      "id": "ductwork",
+      "name": "Ductwork"
+    },
+    {
+      "id": "weatherization",
+      "name": "Weatherization"
+    },
+    {
+      "id": "property_tax",
+      "name": "Property Tax"
+    },
+    {
+      "id": "sales_tax",
+      "name": "Sales Tax"
+    }
+  ],
+  "sources": [],
+  "programs": [],
+  "program_categories": [],
+  "eligibility_rules": [],
+  "incentive_tiers": [],
+  "claim_steps": [],
+  "stacking_rules": [],
+  "coverage": []
+}

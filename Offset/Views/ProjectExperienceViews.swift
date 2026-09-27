@@ -172,6 +172,7 @@ struct SaveProjectEditorView: View {
 struct SavedProjectDetailView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var subscriptions: SubscriptionService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
     @Environment(\.dismiss) private var dismiss
     @State private var showingEditor = false
     @State private var confirmingDeletion = false
@@ -238,7 +239,8 @@ struct SavedProjectDetailView: View {
     }
 
     private var experience: ProjectExperienceService? {
-        try? .bundled(profile: appState.profile)
+        _ = supabaseCatalog.revision
+        return try? .current(profile: appState.profile)
     }
 
     private func projectHeader(_ project: SavedProject) -> some View {
@@ -498,6 +500,7 @@ struct ProgramDetailView: View {
 struct ChecklistRootView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var subscriptions: SubscriptionService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
     @State private var showingUnlock = false
 
     var body: some View {
@@ -513,7 +516,7 @@ struct ChecklistRootView: View {
 
                 if appState.savedProjects.isEmpty {
                     InlineMessageCard(icon: "bookmark", title: "No saved projects", message: "Calculate and save a project to create its claim checklist.")
-                    Button("Go to project pricer") { appState.selectedTab = .projects }
+                    Button("Go to Home") { appState.selectedTab = .home }
                         .buttonStyle(OffsetPrimaryButtonStyle())
                 } else if let profile = appState.profile, let experience {
                     ForEach(appState.savedProjects) { project in
@@ -540,21 +543,24 @@ struct ChecklistRootView: View {
     }
 
     private var experience: ProjectExperienceService? {
-        try? .bundled(profile: appState.profile)
+        _ = supabaseCatalog.revision
+        return try? .current(profile: appState.profile)
     }
 }
 
 struct ProjectChecklistView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var subscriptions: SubscriptionService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
     @State private var showingUnlock = false
     let projectID: SavedProject.ID
 
     var body: some View {
+        let _ = supabaseCatalog.revision
         ScrollView {
             if let project,
                let profile = appState.profile,
-               let experience = try? ProjectExperienceService.bundled(profile: profile) {
+               let experience = try? ProjectExperienceService.current(profile: profile) {
                 ProjectChecklistCard(
                     project: project,
                     groups: experience.checklistGroups(for: project, profile: profile),

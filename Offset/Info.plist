@@ -33,6 +33,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>RevenueCatAPIKey</key>
@@ -45,6 +47,16 @@
 	<string>$(REVENUECAT_ENTITLEMENT_ID)</string>
 	<key>OneSignalAppID</key>
 	<string>$(ONESIGNAL_APP_ID)</string>
+	<key>PrivacyPolicyURL</key>
+	<string>$(PRIVACY_POLICY_URL)</string>
+	<key>SupportURL</key>
+	<string>$(SUPPORT_URL)</string>
+	<key>SupabaseURL</key>
+	<string>$(SUPABASE_URL)</string>
+	<key>SupabasePublishableKey</key>
+	<string>$(SUPABASE_PUBLISHABLE_KEY)</string>
+	<key>SupabasePremiumCatalogFunction</key>
+	<string>$(SUPABASE_PREMIUM_CATALOG_FUNCTION)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

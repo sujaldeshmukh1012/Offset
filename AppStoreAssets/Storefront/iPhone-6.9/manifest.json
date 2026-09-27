@@ -1,0 +1,62 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "06-Offset-Premium.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "06-Offset-Premium_0_A194FA05-F5A8-4FE1-89D2-A516195071C6.png",
+        "timestamp" : 1790145479.72
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "05-Claim-Checklist.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "05-Claim-Checklist_0_C5BD6310-86E9-4409-9862-AC5D23BA5C05.png",
+        "timestamp" : 1790145477.058
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "04-Savings-Estimate.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-Savings-Estimate_0_3450E34D-4092-4387-8332-9D9144AF97F1.png",
+        "timestamp" : 1790145463.82
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "03-Project-Calculator.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-Project-Calculator_0_A19FC9EE-47A0-48E4-90DE-CF0952F034FF.png",
+        "timestamp" : 1790145449.324
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "02-Solar-Programs.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-Solar-Programs_0_40340D7B-86AE-4F60-A46A-FF7F14A2D906.png",
+        "timestamp" : 1790145438.044
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "01-Home-Discovery.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-Home-Discovery_0_0BAAE718-D50F-4F03-AF79-7FE7889D776B.png",
+        "timestamp" : 1790145434.656
+      }
+    ],
+    "testIdentifier" : "OffsetUITests/testCaptureStorefrontScreenshots()",
+    "testIdentifierURL" : "test://com.apple.xcode/Offset/OffsetUITests/OffsetUITests/testCaptureStorefrontScreenshots"
+  }
+]

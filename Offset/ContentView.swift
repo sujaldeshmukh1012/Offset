@@ -16,6 +16,7 @@ struct ContentView: View {
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: appState.rootRoute)
         .tint(OffsetTheme.emerald)
+        .preferredColorScheme(.light)
         .onOpenURL { url in
             if let route = NotificationRoute.parse(url: url) {
                 appState.openNotificationRoute(route)
@@ -51,6 +52,7 @@ struct ContentView: View {
 private struct NotificationDestinationView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var subscriptions: SubscriptionService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
     let route: NotificationRoute
 
     var body: some View {
@@ -79,13 +81,16 @@ private struct NotificationDestinationView: View {
         }
     }
 
-    private var programs: [Program] { (try? ProgramStore.loadBundledPrograms(profile: appState.profile)) ?? [] }
+    private var programs: [Program] {
+        _ = supabaseCatalog.revision
+        return (try? ProgramStore.loadCurrentPrograms(profile: appState.profile)) ?? []
+    }
 
     private func estimatedSavings(programID: String, projectID: UUID?) -> Double {
         guard let profile = appState.profile,
               let projectID,
               let project = appState.savedProjects.first(where: { $0.id == projectID }),
-              let experience = try? ProjectExperienceService.bundled(profile: profile) else { return 0 }
+              let experience = try? ProjectExperienceService.current(profile: profile) else { return 0 }
         return experience.matches(for: project, profile: profile)
             .first(where: { $0.program.id == programID })?
             .estimatedSavingsUSD ?? 0
@@ -98,16 +103,17 @@ private struct NotificationDestinationView: View {
 
 private struct MainTabView: View {
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var subscriptions: SubscriptionService
 
     var body: some View {
         TabView(selection: $appState.selectedTab) {
             NavigationStack {
-                ProjectsRootView()
+                HomeView()
             }
             .tabItem {
-                Label("Projects", systemImage: "house.and.flag")
+                Label("Home", systemImage: "house.fill")
             }
-            .tag(AppState.Tab.projects)
+            .tag(AppState.Tab.home)
 
             NavigationStack {
                 ChecklistRootView()
@@ -116,6 +122,14 @@ private struct MainTabView: View {
                 Label("Checklist", systemImage: "checklist")
             }
             .tag(AppState.Tab.checklist)
+
+            if !subscriptions.hasPremiumAccess {
+                PremiumUnlockView(showsCloseButton: false)
+                    .tabItem {
+                        Label("Premium", systemImage: "crown.fill")
+                    }
+                    .tag(AppState.Tab.premium)
+            }
 
             NavigationStack {
                 SettingsRootView()
@@ -128,18 +142,19 @@ private struct MainTabView: View {
         .tint(OffsetTheme.emerald)
         .toolbarBackground(OffsetTheme.surface, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
-    }
-}
-
-private struct ProjectsRootView: View {
-    var body: some View {
-        ProjectPricerView()
+        .onChange(of: subscriptions.hasPremiumAccess) { hasPremiumAccess in
+            if hasPremiumAccess, appState.selectedTab == .premium {
+                appState.selectedTab = .home
+            }
+        }
     }
 }
 
 private struct SettingsRootView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var notifications: NotificationService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
+    private let configuration = AppConfiguration()
 
     var body: some View {
         List {
@@ -190,6 +205,13 @@ private struct SettingsRootView: View {
                 LabeledContent("Access", value: premiumAccessText)
                     .accessibilityIdentifier("settings.premium-status")
 
+                if !subscriptions.hasPremiumAccess {
+                    Button("Buy Premium") {
+                        appState.selectedTab = .premium
+                    }
+                    .accessibilityIdentifier("settings.buy-premium")
+                }
+
                 if let managementURL = subscriptions.managementURL {
                     Link("Manage subscription", destination: managementURL)
                 }
@@ -198,6 +220,35 @@ private struct SettingsRootView: View {
                     Task { await subscriptions.restore() }
                 }
                 .disabled(isSubscriptionBusy)
+            }
+
+            Section("About") {
+                if let privacyPolicyURL = configuration.privacyPolicyURL {
+                    Link("Privacy Policy", destination: privacyPolicyURL)
+                }
+                if let supportURL = configuration.supportURL {
+                    Link("Support", destination: supportURL)
+                }
+                Link(
+                    "Terms of Use",
+                    destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+                )
+            }
+
+            Section("Rebate data") {
+                Text(supabaseCatalog.statusDescription)
+                    .font(.footnote)
+                    .foregroundStyle(OffsetTheme.secondaryText)
+
+                Button("Check for updates") {
+                    Task {
+                        await supabaseCatalog.refreshIfNeeded(
+                            hasPremiumAccess: subscriptions.hasPremiumAccess,
+                            force: true
+                        )
+                    }
+                }
+                .disabled(!subscriptions.hasPremiumAccess)
             }
 
         }
@@ -244,7 +295,7 @@ private struct SettingsRootView: View {
     }
 
     private func utilityDisplayName(_ identifier: String) -> String {
-        let locations = try? LocationService.bundled()
+        let locations = try? LocationService.current()
         return locations?.utilityName(for: identifier) ?? identifier
     }
 }

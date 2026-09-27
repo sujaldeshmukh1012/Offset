@@ -20,6 +20,11 @@ struct EligibilityQuestion: Identifiable, Equatable, Sendable {
 }
 
 enum EligibilityQuestionService {
+    static func currentQuestions(for project: ProjectType, profile: UserProfile) -> [EligibilityQuestion] {
+        guard let dataset = try? IncentiveDatasetStore.loadCurrent() else { return fallbackQuestions(for: project) }
+        return questions(for: project, profile: profile, dataset: dataset)
+    }
+
     static func bundledQuestions(for project: ProjectType, profile: UserProfile) -> [EligibilityQuestion] {
         guard let dataset = try? IncentiveDatasetStore.loadBundled() else { return fallbackQuestions(for: project) }
         return questions(for: project, profile: profile, dataset: dataset)

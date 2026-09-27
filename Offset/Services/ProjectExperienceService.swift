@@ -21,6 +21,10 @@ struct ProjectExperienceService: Sendable {
         Self(programs: try ProgramStore.loadBundledPrograms(profile: profile), referenceDate: referenceDate)
     }
 
+    static func current(profile: UserProfile? = nil, referenceDate: Date = Date()) throws -> Self {
+        Self(programs: try ProgramStore.loadCurrentPrograms(profile: profile), referenceDate: referenceDate)
+    }
+
     func matches(for project: SavedProject, profile: UserProfile) -> [MatchResult] {
         MatchingEngine(programs: programs, referenceDate: referenceDate).matches(
             for: profile,

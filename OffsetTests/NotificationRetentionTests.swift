@@ -216,7 +216,7 @@ struct NotificationIdentityTests {
         let configuration = AppConfiguration(values: [
             "RevenueCatMonthlyProductID": "monthly",
             "RevenueCatAnnualProductID": "annual",
-            "RevenueCatEntitlementID": "premium"
+            "RevenueCatEntitlementID": "offset_pro"
         ])
 
         let first = NotificationService(configuration: configuration, defaults: defaults)

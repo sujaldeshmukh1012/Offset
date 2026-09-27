@@ -48,6 +48,7 @@ final class SubscriptionService: ObservableObject {
     @Published private(set) var managementURL: URL?
 
     private let configuration: AppConfiguration
+    private var packagesByProductID: [String: RevenueCat.Package] = [:]
     private let isUITestPurchaseMode: Bool
     private let isUITestRestoreMode: Bool
     private var customerInfoTask: Task<Void, Never>?
@@ -57,10 +58,9 @@ final class SubscriptionService: ObservableObject {
 
 #if DEBUG
         let arguments = ProcessInfo.processInfo.arguments
-        // Debug installs default to a deterministic local purchase preview while
-        // App Store Connect products are being prepared. Pass `-use-live-store`
-        // from Xcode when the products are ready for real sandbox testing.
-        isUITestPurchaseMode = !arguments.contains("-use-live-store")
+        // Normal Debug installs use the official App Store/RevenueCat app.
+        // Deterministic purchase behavior is restricted to automated UI tests.
+        isUITestPurchaseMode = arguments.contains { $0.hasPrefix("-ui-testing-") }
         isUITestRestoreMode = arguments.contains("-ui-testing-restore-premium")
         if arguments.contains("-ui-testing-premium") {
             applyAccess(.active(expirationDate: nil, willRenew: true, isTrial: false))
@@ -95,19 +95,53 @@ final class SubscriptionService: ObservableObject {
 
     deinit { customerInfoTask?.cancel() }
 
+    func bindAppUserID(_ appUserID: String) async {
+        guard !isUITestPurchaseMode, !isUITestRestoreMode, Purchases.isConfigured else { return }
+        guard Purchases.shared.appUserID != appUserID else { return }
+        do {
+            let result = try await Purchases.shared.logIn(appUserID)
+            apply(result.customerInfo)
+        } catch {
+            applyAccess(.unavailable(Self.friendlyMessage(for: error)))
+            state = .failed("Premium identity verification failed. Please try again.")
+        }
+    }
+
     func refresh() async {
         if isUITestPurchaseMode || isUITestRestoreMode { return }
         guard Purchases.isConfigured else { return }
         state = .loadingProducts
 
-        async let products = Purchases.shared.products(configuration.revenueCatProductIDs)
+        async let offeringsRequest = Purchases.shared.offerings()
+        async let customerInfoRequest = Purchases.shared.customerInfo()
+
         do {
-            let customerInfo = try await Purchases.shared.customerInfo()
-            self.products = await products.sorted { $0.price < $1.price }
-            apply(customerInfo)
-            state = .idle
+            apply(try await customerInfoRequest)
         } catch {
-            self.products = await products.sorted { $0.price < $1.price }
+            applyAccess(.unavailable(Self.friendlyMessage(for: error)))
+        }
+
+        do {
+            let loadedOfferings = try await offeringsRequest
+            let configuredIDs = Set(configuration.revenueCatProductIDs)
+            let packages = loadedOfferings.current?.availablePackages.filter {
+                configuredIDs.contains($0.storeProduct.productIdentifier)
+            } ?? []
+
+            packagesByProductID = Dictionary(
+                packages.map { ($0.storeProduct.productIdentifier, $0) },
+                uniquingKeysWith: { first, _ in first }
+            )
+            products = configuration.revenueCatProductIDs
+                .compactMap { packagesByProductID[$0]?.storeProduct }
+                .sorted { $0.price < $1.price }
+
+            if products.count == configuration.revenueCatProductIDs.count {
+                state = .idle
+            } else {
+                state = .failed("Premium plans are temporarily unavailable. Please try again later.")
+            }
+        } catch {
             state = .failed(Self.friendlyMessage(for: error))
         }
     }
@@ -131,14 +165,14 @@ final class SubscriptionService: ObservableObject {
             return
         }
 #endif
-        guard let product = products.first(where: { $0.productIdentifier == productID }) else {
+        guard let package = packagesByProductID[productID] else {
             state = .failed("The selected subscription is unavailable from the App Store.")
             return
         }
 
         state = .purchasing
         do {
-            let result = try await Purchases.shared.purchase(product: product)
+            let result = try await Purchases.shared.purchase(package: package)
             apply(result.customerInfo)
             if result.userCancelled {
                 state = .cancelled
@@ -177,6 +211,22 @@ final class SubscriptionService: ObservableObject {
         } catch {
             state = .failed(Self.friendlyMessage(for: error))
         }
+    }
+
+    func presentOfferCodeRedemption() {
+#if DEBUG
+        guard !isUITestPurchaseMode else {
+            state = .failed("Offer codes are unavailable during automated UI testing.")
+            return
+        }
+#endif
+        guard Purchases.isConfigured else {
+            state = .failed("Purchases are not configured for this build.")
+            return
+        }
+
+        state = .idle
+        Purchases.shared.presentCodeRedemptionSheet()
     }
 
     func product(id: String) -> StoreProduct? {

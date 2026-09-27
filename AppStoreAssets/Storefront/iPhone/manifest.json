@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "04-Claim-Checklist.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-Claim-Checklist_0_579CEA5E-540B-48F3-81F2-86C3990C6D88.png",
+        "timestamp" : 1789883996.183
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "03-Program-Details.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-Program-Details_0_95221A96-B830-43F6-A382-AE235BD711BC.png",
+        "timestamp" : 1789883989.213
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "02-Verified-Savings.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-Verified-Savings_0_CA0BDCB8-792D-4B64-86C5-28372D00F037.png",
+        "timestamp" : 1789883986.106
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "0319D5D0-4792-4B6E-8767-3C0C90C996B1",
+        "deviceName" : "iPhone 16 Pro Max",
+        "exportedFileName" : "01-Project-Pricer.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-Project-Pricer_0_E4FF13CE-DCDB-49BB-A507-F09CD09881D6.png",
+        "timestamp" : 1789883967.674
+      }
+    ],
+    "testIdentifier" : "OffsetUITests/testCaptureStorefrontScreenshots()",
+    "testIdentifierURL" : "test://com.apple.xcode/Offset/OffsetUITests/OffsetUITests/testCaptureStorefrontScreenshots"
+  }
+]

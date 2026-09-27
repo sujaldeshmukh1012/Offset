@@ -2,4 +2,16 @@
 // and the RevenueCat dashboard exactly before an on-device sandbox test.
 REVENUECAT_MONTHLY_PRODUCT_ID = com.sujal.Offset.premium.monthly
 REVENUECAT_ANNUAL_PRODUCT_ID = com.sujal.Offset.premium.annual
-REVENUECAT_ENTITLEMENT_ID = premium
+REVENUECAT_ENTITLEMENT_ID = offset_pro
+
+// xcconfig treats // as a comment. Encode public HTTPS URLs as
+// https:/$()/example.com/path when setting these values locally.
+PRIVACY_POLICY_URL =
+SUPPORT_URL =
+
+// The Supabase URL and publishable key identify the backend and are safe to
+// embed. Premium catalog objects remain private and are returned only through
+// the entitlement-verifying Edge Function.
+SUPABASE_URL =
+SUPABASE_PUBLISHABLE_KEY =
+SUPABASE_PREMIUM_CATALOG_FUNCTION = premium-catalog

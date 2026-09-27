@@ -32,6 +32,7 @@ struct OffsetApp: App {
     @StateObject private var appState: AppState
     @StateObject private var subscriptions: SubscriptionService
     @StateObject private var notifications: NotificationService
+    @StateObject private var supabaseCatalog: SupabaseCatalogService
 
     init() {
 #if DEBUG
@@ -43,6 +44,7 @@ struct OffsetApp: App {
         _appState = StateObject(wrappedValue: AppState())
         _subscriptions = StateObject(wrappedValue: SubscriptionService(configuration: configuration))
         _notifications = StateObject(wrappedValue: NotificationService(configuration: configuration))
+        _supabaseCatalog = StateObject(wrappedValue: SupabaseCatalogService(configuration: configuration))
     }
 
     var body: some Scene {
@@ -51,14 +53,24 @@ struct OffsetApp: App {
                 .environmentObject(appState)
                 .environmentObject(subscriptions)
                 .environmentObject(notifications)
+                .environmentObject(supabaseCatalog)
                 .tint(OffsetTheme.emerald)
                 .task {
+                    if let appUserID = await supabaseCatalog.prepareIdentity() {
+                        await subscriptions.bindAppUserID(appUserID)
+                    }
                     await subscriptions.refresh()
                     if let route = appDelegate.consumePendingRoute() {
                         appState.openNotificationRoute(route)
                     }
                 }
-                .task(id: "\(appState.notificationSyncRevision)-\(subscriptions.hasPremiumAccess)") {
+                .task(id: subscriptions.hasPremiumAccess) {
+                    await supabaseCatalog.refreshIfNeeded(
+                        hasPremiumAccess: subscriptions.hasPremiumAccess,
+                        force: subscriptions.hasPremiumAccess
+                    )
+                }
+                .task(id: "\(appState.notificationSyncRevision)-\(subscriptions.hasPremiumAccess)-\(supabaseCatalog.revision)") {
                     await synchronizeNotifications()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .offsetForegroundNotificationReceived)) { _ in
@@ -67,7 +79,13 @@ struct OffsetApp: App {
                 .onChange(of: scenePhase) { phase in
                     guard phase == .active else { return }
                     Task {
+                        if let appUserID = await supabaseCatalog.prepareIdentity() {
+                            await subscriptions.bindAppUserID(appUserID)
+                        }
                         await subscriptions.refreshEntitlement()
+                        await supabaseCatalog.refreshIfNeeded(
+                            hasPremiumAccess: subscriptions.hasPremiumAccess
+                        )
                         await synchronizeNotifications()
                     }
                 }

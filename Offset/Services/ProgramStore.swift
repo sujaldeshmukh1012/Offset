@@ -7,6 +7,22 @@ enum ProgramStoreError: Error, Equatable {
 }
 
 struct ProgramStore {
+    static func loadCurrentCatalog(profile: UserProfile? = nil) throws -> ProgramCatalog {
+        let dataset = try IncentiveDatasetStore.loadCurrent()
+        let generatedAt = ISO8601DateFormatter().date(from: dataset.meta.generatedAt) ?? Date(timeIntervalSince1970: 0)
+        let catalog = ProgramCatalog(
+            schemaVersion: ProgramCatalog.currentSchemaVersion,
+            generatedAt: generatedAt,
+            programs: IncentiveDatasetStore.appPrograms(from: dataset, profile: profile)
+        )
+        try validate(catalog)
+        return catalog
+    }
+
+    static func loadCurrentPrograms(profile: UserProfile? = nil) throws -> [Program] {
+        try loadCurrentCatalog(profile: profile).programs
+    }
+
     static func loadBundledCatalog(
         named resourceName: String = "offset_seed",
         bundle: Bundle = .main,

@@ -8,8 +8,9 @@ final class AppState: ObservableObject {
     }
 
     enum Tab: Hashable {
-        case projects
+        case home
         case checklist
+        case premium
         case settings
     }
 
@@ -20,7 +21,7 @@ final class AppState: ObservableObject {
     @Published private(set) var latestPricerDraft: PricerDraft?
     @Published private(set) var hasCompletedOnboarding: Bool
     @Published private(set) var rootRoute: RootRoute
-    @Published var selectedTab: Tab = .projects
+    @Published var selectedTab: Tab = .home
     @Published var notificationRoute: NotificationRoute?
     @Published private(set) var notificationSyncRevision = 0
     @Published private(set) var persistenceErrorMessage: String?
@@ -172,7 +173,7 @@ final class AppState: ObservableObject {
 
     func openNotificationRoute(_ route: NotificationRoute) {
         guard hasCompletedOnboarding else { return }
-        selectedTab = route.isChecklistDestination ? .checklist : .projects
+        selectedTab = route.isChecklistDestination ? .checklist : .home
         notificationRoute = route
     }
 

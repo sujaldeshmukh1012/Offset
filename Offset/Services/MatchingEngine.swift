@@ -8,7 +8,7 @@ struct MatchingEngine: Sendable {
     init(
         programs: [Program],
         referenceDate: Date = Date(),
-        stackingPolicy: ProgramStackingPolicy = .bundled()
+        stackingPolicy: ProgramStackingPolicy = .current()
     ) {
         self.programs = programs
         self.referenceDate = referenceDate

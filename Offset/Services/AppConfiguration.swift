@@ -7,6 +7,11 @@ struct AppConfiguration: Equatable, Sendable {
         case revenueCatAnnualProductID = "RevenueCatAnnualProductID"
         case revenueCatEntitlementID = "RevenueCatEntitlementID"
         case oneSignalAppID = "OneSignalAppID"
+        case privacyPolicyURL = "PrivacyPolicyURL"
+        case supportURL = "SupportURL"
+        case supabaseURL = "SupabaseURL"
+        case supabasePublishableKey = "SupabasePublishableKey"
+        case supabasePremiumCatalogFunction = "SupabasePremiumCatalogFunction"
     }
 
     let revenueCatAPIKey: String?
@@ -14,6 +19,11 @@ struct AppConfiguration: Equatable, Sendable {
     let revenueCatAnnualProductID: String
     let revenueCatEntitlementID: String
     let oneSignalAppID: String?
+    let privacyPolicyURL: URL?
+    let supportURL: URL?
+    let supabaseURL: URL?
+    let supabasePublishableKey: String?
+    let supabasePremiumCatalogFunction: String
 
     var revenueCatProductIDs: [String] {
         [revenueCatMonthlyProductID, revenueCatAnnualProductID]
@@ -38,6 +48,13 @@ struct AppConfiguration: Equatable, Sendable {
             key: .revenueCatEntitlementID
         )
         oneSignalAppID = Self.configuredValue(values[Key.oneSignalAppID.rawValue])
+        privacyPolicyURL = Self.configuredHTTPSURL(values[Key.privacyPolicyURL.rawValue])
+        supportURL = Self.configuredHTTPSURL(values[Key.supportURL.rawValue])
+        supabaseURL = Self.configuredSupabaseURL(values[Key.supabaseURL.rawValue])
+        supabasePublishableKey = Self.configuredValue(values[Key.supabasePublishableKey.rawValue])
+        supabasePremiumCatalogFunction = Self.configuredValue(
+            values[Key.supabasePremiumCatalogFunction.rawValue]
+        ) ?? "premium-catalog"
     }
 
     private static func requiredValue(_ rawValue: Any?, key _: Key) -> String {
@@ -54,5 +71,20 @@ struct AppConfiguration: Equatable, Sendable {
               !trimmed.hasPrefix("REPLACE_WITH_"),
               !trimmed.contains("$(") else { return nil }
         return trimmed
+    }
+
+    private static func configuredHTTPSURL(_ rawValue: Any?) -> URL? {
+        guard let value = configuredValue(rawValue),
+              let url = URL(string: value),
+              url.scheme?.lowercased() == "https",
+              url.host != nil else { return nil }
+        return url
+    }
+
+    private static func configuredSupabaseURL(_ rawValue: Any?) -> URL? {
+        guard let url = configuredHTTPSURL(rawValue),
+              url.path.isEmpty || url.path == "/",
+              url.host?.hasSuffix(".supabase.co") == true else { return nil }
+        return url
     }
 }

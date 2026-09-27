@@ -245,7 +245,7 @@ final class NotificationService: ObservableObject {
         await refreshStatus()
         let programs: [Program]
         do {
-            programs = try ProgramStore.loadBundledPrograms(profile: context.profile)
+            programs = try ProgramStore.loadCurrentPrograms(profile: context.profile)
         } catch {
             statusMessage = "Reminder data could not be loaded: \(error.localizedDescription)"
             return

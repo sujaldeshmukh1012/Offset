@@ -42,7 +42,7 @@ final class OffsetUITests: XCTestCase {
     func testCompletesAndEditsOnboarding() throws {
         let app = completeOnboarding()
 
-        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["Estimate your project cost"].exists)
         app.buttons["Solar panels"].tap()
         let priceField = app.textFields["pricer.price"]
@@ -61,6 +61,22 @@ final class OffsetUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Edit profile"].waitForExistence(timeout: 2))
         app.buttons["Cancel"].tap()
         XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testHomeDiscoversBeforeRequestingAQuote() throws {
+        let app = completeOnboarding(openPricer: false)
+
+        XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["home.summary"].exists)
+        let solar = app.descendants(matching: .any)["home.opportunity.solar"]
+        XCTAssertTrue(solar.waitForExistence(timeout: 3))
+        solar.tap()
+
+        XCTAssertTrue(app.navigationBars["Solar panels"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["What Offset found"].exists)
+        XCTAssertTrue(app.staticTexts["Refine your match"].exists)
+        XCTAssertFalse(app.textFields["pricer.price"].exists)
     }
 
     @MainActor
@@ -118,7 +134,7 @@ final class OffsetUITests: XCTestCase {
         app.buttons["saved-project.menu"].tap()
         app.buttons["Delete project"].tap()
         app.buttons["Delete project"].tap()
-        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
         XCTAssertFalse(app.buttons["saved-project-row"].exists)
     }
 
@@ -154,7 +170,8 @@ final class OffsetUITests: XCTestCase {
         solar.tap()
         continueButton.tap()
 
-        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 3))
+        openProjectPricer(in: app)
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
         let priceField = app.textFields["pricer.price"]
         priceField.tap()
         priceField.typeText("12000")
@@ -217,7 +234,8 @@ final class OffsetUITests: XCTestCase {
         waterHeater.tap()
         continueButton.tap()
 
-        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 3))
+        openProjectPricer(in: app)
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
         let priceField = app.textFields["pricer.price"]
         priceField.tap()
         priceField.typeText("2500")
@@ -243,10 +261,29 @@ final class OffsetUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Offset Premium"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["paywall.annual"].exists)
         XCTAssertTrue(app.buttons["paywall.monthly"].exists)
-        app.buttons["paywall.annual"].tap()
+        XCTAssertTrue(app.buttons["paywall.redeem-offer-code"].exists)
+        app.buttons["paywall.monthly"].tap()
+        XCTAssertTrue(app.navigationBars["Offset Premium"].exists)
+        XCTAssertEqual(app.buttons["paywall.monthly"].value as? String, "Selected")
+        app.buttons["paywall.continue"].tap()
 
         XCTAssertTrue(app.staticTexts["New York Solar Energy System Equipment Credit"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["$9,000"].exists)
+    }
+
+    @MainActor
+    func testPremiumTabPurchasesAndDisappearsAfterUnlock() throws {
+        let app = completeOnboarding(openPricer: false)
+
+        let premiumTab = app.tabBars.buttons["Premium"]
+        XCTAssertTrue(premiumTab.waitForExistence(timeout: 3))
+        premiumTab.tap()
+        XCTAssertTrue(app.navigationBars["Offset Premium"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["paywall.continue"].isEnabled)
+        app.buttons["paywall.continue"].tap()
+
+        XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 3))
+        XCTAssertTrue(premiumTab.waitForNonExistence(timeout: 3))
     }
 
     @MainActor
@@ -263,6 +300,68 @@ final class OffsetUITests: XCTestCase {
         attachment.name = "Offset-Premium-Review"
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    @MainActor
+    func testCaptureStorefrontScreenshots() throws {
+        let app = completeOnboarding(launchArguments: [
+            "-ui-testing-reset-state",
+            "-ui-testing-monetization",
+            "-UIAccessibilityIsReduceMotionEnabled", "YES"
+        ], openPricer: false)
+
+        XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["home.summary"].exists)
+        captureScreenshot(named: "01-Home-Discovery")
+
+        let solarOpportunity = app.descendants(matching: .any)["home.opportunity.solar"]
+        XCTAssertTrue(solarOpportunity.waitForExistence(timeout: 3))
+        solarOpportunity.tap()
+        XCTAssertTrue(app.navigationBars["Solar panels"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["What Offset found"].exists)
+        captureScreenshot(named: "02-Solar-Programs")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        openProjectPricer(in: app)
+
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
+        let solar = app.buttons["Solar panels"]
+        XCTAssertTrue(solar.waitForExistence(timeout: 3))
+        solar.tap()
+        captureScreenshot(named: "03-Project-Calculator")
+
+        let priceField = app.textFields["pricer.price"]
+        XCTAssertTrue(priceField.waitForExistence(timeout: 2))
+        priceField.tap()
+        priceField.typeText("12000")
+        dismissKeyboardIfNeeded(in: app)
+        app.buttons["pricer.calculate"].tap()
+        dismissNotificationPrimerIfNeeded(in: app)
+        XCTAssertTrue(app.descendants(matching: .any)["pricer.results"].waitForExistence(timeout: 3))
+        for _ in 0..<1 {
+            app.scrollViews.firstMatch.swipeUp()
+        }
+        captureScreenshot(named: "04-Savings-Estimate")
+
+        let saveProject = app.buttons["pricer.save-project"]
+        scrollToHittable(saveProject, in: app)
+        app.buttons["pricer.save-project"].tap()
+        XCTAssertTrue(app.navigationBars["Save project"].waitForExistence(timeout: 3))
+        app.buttons["Save"].tap()
+
+        let checklistTab = app.tabBars.buttons["Checklist"]
+        XCTAssertTrue(checklistTab.waitForExistence(timeout: 3))
+        checklistTab.tap()
+        XCTAssertTrue(app.navigationBars["Checklist"].waitForExistence(timeout: 3))
+        captureScreenshot(named: "05-Claim-Checklist")
+
+        let premiumTab = app.tabBars.buttons["Premium"]
+        XCTAssertTrue(premiumTab.waitForExistence(timeout: 3))
+        premiumTab.tap()
+        XCTAssertTrue(app.navigationBars["Offset Premium"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["paywall.annual"].exists)
+        XCTAssertTrue(app.buttons["paywall.monthly"].exists)
+        captureScreenshot(named: "06-Offset-Premium")
     }
 
     @MainActor
@@ -327,7 +426,8 @@ final class OffsetUITests: XCTestCase {
         heatPump.tap()
         continueButton.tap()
 
-        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 3))
+        openProjectPricer(in: app)
+        XCTAssertTrue(app.navigationBars["Calculate"].waitForExistence(timeout: 3))
         let contractorYes = app.buttons["eligibility.contractor_participating.yes"]
         scrollToHittable(contractorYes, in: app)
         contractorYes.tap()
@@ -358,7 +458,8 @@ final class OffsetUITests: XCTestCase {
 
     @MainActor
     private func completeOnboarding(
-        launchArguments: [String] = ["-ui-testing-reset-state"]
+        launchArguments: [String] = ["-ui-testing-reset-state"],
+        openPricer: Bool = true
     ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = launchArguments
@@ -393,7 +494,16 @@ final class OffsetUITests: XCTestCase {
         heatPump.tap()
         solar.tap()
         continueButton.tap()
+        if openPricer { openProjectPricer(in: app) }
         return app
+    }
+
+    @MainActor
+    private func openProjectPricer(in app: XCUIApplication) {
+        XCTAssertTrue(app.navigationBars["Home"].waitForExistence(timeout: 5))
+        let calculate = app.buttons["home.calculate-project"]
+        scrollToHittable(calculate, in: app)
+        calculate.tap()
     }
 
     @MainActor
@@ -426,7 +536,11 @@ final class OffsetUITests: XCTestCase {
         XCTAssertTrue(utility.waitForExistence(timeout: 3))
         XCTAssertTrue(utility.isHittable)
         utility.tap()
-        XCTAssertEqual(utility.value as? String, "Selected")
+        let selected = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", "Selected"),
+            object: utility
+        )
+        XCTAssertEqual(XCTWaiter.wait(for: [selected], timeout: 3), .completed)
     }
 
     @MainActor
@@ -442,9 +556,17 @@ final class OffsetUITests: XCTestCase {
     @MainActor
     private func dismissKeyboardIfNeeded(in app: XCUIApplication) {
         guard app.keyboards.firstMatch.exists else { return }
-        let done = app.buttons["Done"]
+        let done = app.buttons["Done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 2))
         done.tap()
         XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 3))
+    }
+
+    @MainActor
+    private func captureScreenshot(named name: String) {
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 }

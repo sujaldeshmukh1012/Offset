@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "9E2BDA2A-0720-452A-8BFD-F89EF7DB6643",
+        "deviceName" : "iPad Pro 13-inch (M4)",
+        "exportedFileName" : "04-Claim-Checklist.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-Claim-Checklist_0_07F3EAD9-DD0C-4F45-A668-1324022E2563.png",
+        "timestamp" : 1789884170.735
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "9E2BDA2A-0720-452A-8BFD-F89EF7DB6643",
+        "deviceName" : "iPad Pro 13-inch (M4)",
+        "exportedFileName" : "03-Program-Details.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-Program-Details_0_4A2DE5B9-A2FA-405D-8F68-3D76FAAA26FF.png",
+        "timestamp" : 1789884163.987
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "9E2BDA2A-0720-452A-8BFD-F89EF7DB6643",
+        "deviceName" : "iPad Pro 13-inch (M4)",
+        "exportedFileName" : "02-Verified-Savings.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-Verified-Savings_0_1922341F-FE2F-42E5-98AC-3DC7554B8433.png",
+        "timestamp" : 1789884160.872
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "9E2BDA2A-0720-452A-8BFD-F89EF7DB6643",
+        "deviceName" : "iPad Pro 13-inch (M4)",
+        "exportedFileName" : "01-Project-Pricer.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-Project-Pricer_0_BDF7E8D1-F0B0-4E9C-8D13-9ECA5B7B5496.png",
+        "timestamp" : 1789884145.29
+      }
+    ],
+    "testIdentifier" : "OffsetUITests/testCaptureStorefrontScreenshots()",
+    "testIdentifierURL" : "test://com.apple.xcode/Offset/OffsetUITests/OffsetUITests/testCaptureStorefrontScreenshots"
+  }
+]

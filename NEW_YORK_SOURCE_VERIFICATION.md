@@ -1,5 +1,11 @@
 # New York source verification — Milestone 2
 
+> Historical September 13 milestone snapshot. Several programs listed below as
+> “not published yet” were subsequently enabled only after typed eligibility
+> questions, fail-closed formula handling, and coverage warnings were added.
+> `Data/offset_seed.json`, `RELEASE_READINESS.md`, and the current automated
+> tests are authoritative for the release candidate.
+
 Verified on September 13, 2026. Only primary administrator sources were used for catalog publication.
 
 ## Conflict resolution

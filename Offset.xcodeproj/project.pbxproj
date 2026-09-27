@@ -10,7 +10,6 @@
 		8BC5E78230531E9A00A118E1 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC5E78130531E9A00A118E1 /* RevenueCat */; };
 		8BC5E78430531E9A00A118E1 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC5E78330531E9A00A118E1 /* RevenueCatUI */; };
 		8BC5E78530531E9A00A118E1 /* OneSignalFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC5E78730531E9A00A118E1 /* OneSignalFramework */; };
-		8BC5E78C30531E9A00A118E1 /* Data/offset_seed.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BC5E78D30531E9A00A118E1 /* Data/offset_seed.json */; };
 		8BC5E79030531E9A00A118E1 /* OneSignalExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC5E79F30531E9A00A118E1 /* OneSignalExtension */; };
 		8BC5E79130531E9A00A118E1 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BC5E79430531E9A00A118E1 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -59,7 +58,6 @@
 		8BC5E76D30531C6300A118E1 /* OffsetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OffsetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC5E78830531E9A00A118E1 /* Offset/Configuration/Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Offset/Configuration/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		8BC5E78930531E9A00A118E1 /* Offset/Configuration/Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Offset/Configuration/Release.xcconfig; sourceTree = SOURCE_ROOT; };
-		8BC5E78D30531E9A00A118E1 /* Data/offset_seed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Data/offset_seed.json; sourceTree = SOURCE_ROOT; };
 		8BC5E79430531E9A00A118E1 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				8BC5E78A30531E9A00A118E1 /* Build Configuration */,
-				8BC5E78D30531E9A00A118E1 /* Data/offset_seed.json */,
 				8BC5E75730531C6000A118E1 /* Offset */,
 				8BC5E79630531E9A00A118E1 /* OneSignalNotificationServiceExtension */,
 				8BC5E76630531C6300A118E1 /* OffsetTests */,
@@ -199,6 +196,7 @@
 				8BC5E75130531C6000A118E1 /* Sources */,
 				8BC5E75230531C6000A118E1 /* Frameworks */,
 				8BC5E75330531C6000A118E1 /* Resources */,
+				8BC5E7A030531E9A00A118E1 /* Install Debug Incentive Fixture */,
 				8BC5E79330531E9A00A118E1 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -364,7 +362,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BC5E78C30531E9A00A118E1 /* Data/offset_seed.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +387,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8BC5E7A030531E9A00A118E1 /* Install Debug Incentive Fixture */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Data/offset_seed.json",
+			);
+			name = "Install Debug Incentive Fixture";
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/offset_seed_debug.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" = \"Debug\" ]; then\n  cp \"$SRCROOT/Data/offset_seed.json\" \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/offset_seed_debug.json\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8BC5E75130531C6000A118E1 /* Sources */ = {
@@ -570,7 +586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -598,7 +614,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Offset/Offset.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -623,7 +639,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -642,7 +658,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -660,7 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -677,7 +693,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -696,7 +712,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -717,7 +733,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = R468B3M52S;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;

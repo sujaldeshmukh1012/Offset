@@ -55,8 +55,8 @@ final class ProjectPricerViewModel: ObservableObject {
     ) {
         self.selectedProject = selectedProject
         self.referenceDate = referenceDate
-        self.loadPrograms = { try ProgramStore.loadBundledPrograms() }
-        self.loadProgramsForProfile = { try ProgramStore.loadBundledPrograms(profile: $0) }
+        self.loadPrograms = { try ProgramStore.loadCurrentPrograms() }
+        self.loadProgramsForProfile = { try ProgramStore.loadCurrentPrograms(profile: $0) }
         self.status = .idle
         reloadPrograms()
     }

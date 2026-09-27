@@ -6,9 +6,10 @@ struct ProjectPricerView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var subscriptions: SubscriptionService
     @EnvironmentObject private var notifications: NotificationService
+    @EnvironmentObject private var supabaseCatalog: SupabaseCatalogService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @StateObject private var viewModel = ProjectPricerViewModel()
+    @StateObject private var viewModel: ProjectPricerViewModel
     @FocusState private var focusedField: String?
     @State private var showingUnlock = false
     @State private var showingSaveProject = false
@@ -16,6 +17,10 @@ struct ProjectPricerView: View {
     @State private var revealStage = 3
     @State private var eligibilityQuestions: [EligibilityQuestion] = []
     @State private var coverageAssessment: CoverageAssessment?
+
+    init(selectedProject: ProjectType? = nil) {
+        _viewModel = StateObject(wrappedValue: ProjectPricerViewModel(selectedProject: selectedProject))
+    }
 
     var body: some View {
         ScrollView {
@@ -36,7 +41,7 @@ struct ProjectPricerView: View {
             .padding(.bottom, 72)
         }
         .offsetScreen()
-        .navigationTitle("Projects")
+        .navigationTitle("Calculate")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
@@ -60,6 +65,11 @@ struct ProjectPricerView: View {
         .onChange(of: subscriptions.hasPremiumAccess) { _ in
             guard viewModel.status == .results else { return }
             viewModel.calculate(profile: appState.profile, hasPremiumAccess: subscriptions.hasPremiumAccess)
+        }
+        .onChange(of: supabaseCatalog.revision) { _ in
+            viewModel.reloadPrograms()
+            viewModel.invalidateResults()
+            refreshEligibilityQuestions()
         }
         .task(id: viewModel.calculationID) {
             guard viewModel.status == .results else { return }
@@ -231,8 +241,8 @@ struct ProjectPricerView: View {
             coverageAssessment = nil
             return
         }
-        eligibilityQuestions = EligibilityQuestionService.bundledQuestions(for: project, profile: profile)
-        coverageAssessment = CoverageService.bundledAssessment(for: project, profile: profile)
+        eligibilityQuestions = EligibilityQuestionService.currentQuestions(for: project, profile: profile)
+        coverageAssessment = CoverageService.currentAssessment(for: project, profile: profile)
     }
 
     private func coverageIcon(_ confidence: CoverageAssessment.Confidence) -> String {
@@ -415,7 +425,7 @@ struct ProjectPricerView: View {
     private var advisoryPrograms: [Program] {
         guard let project = viewModel.selectedProject,
               let profile = appState.profile,
-              let programs = try? ProgramStore.loadBundledPrograms(profile: profile) else { return [] }
+              let programs = try? ProgramStore.loadCurrentPrograms(profile: profile) else { return [] }
         return programs.filter { program in
             guard program.projectTypes.contains(project), program.status != .active, program.status != .closed else { return false }
             switch program.level {
@@ -516,7 +526,7 @@ struct ProjectPricerView: View {
                         .foregroundStyle(Color.white.opacity(0.78))
                     Text("Sticker price − incentives in the order shown = estimated net price")
                         .font(.footnote.weight(.medium))
-                        .foregroundStyle(OffsetTheme.secondaryText)
+                        .foregroundStyle(Color.white.opacity(0.72))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -534,7 +544,7 @@ struct ProjectPricerView: View {
             }
             .padding(16)
             .foregroundStyle(Color.white)
-            .background(OffsetTheme.navyDeep, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .background(OffsetTheme.inverseSurface, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
             .opacity(revealStage >= 3 ? 1 : 0)
 
             if viewModel.hasLockedMatches {
@@ -620,7 +630,7 @@ struct ProjectPricerView: View {
     }
 }
 
-private struct EligibilityQuestionRow: View {
+struct EligibilityQuestionRow: View {
     let question: EligibilityQuestion
     let answer: EligibilityAnswer?
     let focusedField: FocusState<String?>.Binding
@@ -806,7 +816,13 @@ struct PremiumUnlockView: View {
     @EnvironmentObject private var subscriptions: SubscriptionService
     @Environment(\.dismiss) private var dismiss
     private let configuration = AppConfiguration()
+    let showsCloseButton: Bool
     @State private var showingPrivacy = false
+    @State private var selectedPlanID: String?
+
+    init(showsCloseButton: Bool = true) {
+        self.showsCloseButton = showsCloseButton
+    }
 
     var body: some View {
         NavigationStack {
@@ -814,35 +830,65 @@ struct PremiumUnlockView: View {
                 VStack(spacing: 18) {
                     VStack(spacing: 12) {
                         OffsetLogoMark(size: 50)
-                        Text("Unlock your full savings")
+                        Text("Offset Premium")
                             .font(.title.weight(.bold))
                             .foregroundStyle(OffsetTheme.text)
                             .multilineTextAlignment(.center)
-                        Text("Reveal matched state and utility incentives, their application order, and your complete estimated net price.")
+                        Text("A complete view of the incentives available to your project.")
                             .font(.subheadline)
                             .foregroundStyle(OffsetTheme.secondaryText)
                             .multilineTextAlignment(.center)
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
-                        premiumBenefit("Reveal every matched incentive", icon: "eye.fill")
-                        premiumBenefit("See the complete application order", icon: "list.number")
-                        premiumBenefit("Know your final estimated net price", icon: "dollarsign.circle")
-                        premiumBenefit("Save and track unlimited projects", icon: "bookmark.fill")
+                        premiumBenefit("All matched incentives", icon: "checkmark.seal.fill")
+                        premiumBenefit("Application order and net cost", icon: "list.number")
+                        premiumBenefit("Claim guidance", icon: "doc.text.fill")
+                        premiumBenefit("Unlimited saved projects", icon: "bookmark.fill")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .offsetCard(padding: 18)
 
                     VStack(spacing: 12) {
                         ForEach(displayedPlanIDs, id: \.self) { id in
-                            purchaseButton(
+                            planButton(
                                 id: id,
-                                fallback: id == configuration.revenueCatAnnualProductID ? "Annual" : "Monthly",
-                                highlighted: id == configuration.revenueCatAnnualProductID,
+                                fallback: planName(for: id),
+                                selected: selectedPlan == id,
                                 showsBestValue: displayedPlanIDs.count > 1 && id == configuration.revenueCatAnnualProductID
                             )
                         }
+
+                        if displayedPlanIDs.isEmpty {
+                            VStack(spacing: 10) {
+                                Label("Plans unavailable", systemImage: "wifi.exclamationmark")
+                                    .font(.headline)
+                                Text("Offset could not load the current App Store plans. Check your connection and try again.")
+                                    .font(.footnote)
+                                    .foregroundStyle(OffsetTheme.secondaryText)
+                                    .multilineTextAlignment(.center)
+                                Button("Try loading plans again") {
+                                    Task { await subscriptions.refresh() }
+                                }
+                                .font(.subheadline.weight(.semibold))
+                                .disabled(isBusy)
+                                .accessibilityIdentifier("paywall.retry")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .offsetCard(padding: 18)
+                        }
                     }
+
+                    Button {
+                        guard let selectedPlan else { return }
+                        Task { await subscriptions.purchase(productID: selectedPlan) }
+                    } label: {
+                        Text(selectedPlan.map { "Continue with \(planName(for: $0))" } ?? "Continue")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(OffsetPrimaryButtonStyle())
+                    .disabled(selectedPlan == nil || isBusy)
+                    .accessibilityIdentifier("paywall.continue")
 
                     if let statusMessage {
                         Label(statusMessage.text, systemImage: statusMessage.icon)
@@ -859,7 +905,14 @@ struct PremiumUnlockView: View {
                     .disabled(isBusy)
                     .accessibilityIdentifier("paywall.restore")
 
-                    Text("Payment is charged to your Apple ID. Subscriptions renew automatically unless cancelled at least 24 hours before the current period ends. Any trial shown is available only when confirmed by the App Store purchase sheet.")
+                    Button("Redeem offer code") {
+                        subscriptions.presentOfferCodeRedemption()
+                    }
+                    .font(.subheadline.weight(.semibold))
+                    .disabled(isBusy)
+                    .accessibilityIdentifier("paywall.redeem-offer-code")
+
+                    Text("Payment is charged to your Apple Account. Subscriptions renew automatically unless cancelled at least 24 hours before the current period ends. Any trial shown is available only when confirmed by the App Store purchase sheet.")
                         .font(.caption)
                         .foregroundStyle(OffsetTheme.secondaryText)
                         .multilineTextAlignment(.center)
@@ -868,7 +921,11 @@ struct PremiumUnlockView: View {
                         if let termsURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
                             Link("Terms of Use", destination: termsURL)
                         }
-                        Button("Privacy") { showingPrivacy = true }
+                        if let privacyPolicyURL = configuration.privacyPolicyURL {
+                            Link("Privacy Policy", destination: privacyPolicyURL)
+                        } else {
+                            Button("Privacy") { showingPrivacy = true }
+                        }
                     }
                     .font(.caption.weight(.semibold))
                 }
@@ -880,13 +937,15 @@ struct PremiumUnlockView: View {
             .navigationTitle("Offset Premium")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { dismiss() }
+                if showsCloseButton {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close") { dismiss() }
+                    }
                 }
             }
             .task { await subscriptions.refresh() }
             .onChange(of: subscriptions.hasPremiumAccess) { hasAccess in
-                if hasAccess { dismiss() }
+                if hasAccess, showsCloseButton { dismiss() }
             }
             .sheet(isPresented: $showingPrivacy) { PremiumPrivacyView() }
         }
@@ -899,11 +958,14 @@ struct PremiumUnlockView: View {
     }
 
     @ViewBuilder
-    private func purchaseButton(id: String, fallback: String, highlighted: Bool, showsBestValue: Bool) -> some View {
+    private func planButton(id: String, fallback: String, selected: Bool, showsBestValue: Bool) -> some View {
         Button {
-            Task { await subscriptions.purchase(productID: id) }
+            selectedPlanID = id
         } label: {
             HStack(spacing: 12) {
+                Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+                    .font(.title3)
+                    .foregroundStyle(selected ? OffsetTheme.emerald : OffsetTheme.mutedText)
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 7) {
                         Text(fallback)
@@ -911,9 +973,10 @@ struct PremiumUnlockView: View {
                         if showsBestValue {
                             Text("BEST VALUE")
                                 .font(.system(size: 8, weight: .bold))
+                                .foregroundStyle(Color.white)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 3)
-                                .background(Color.white.opacity(0.16), in: Capsule())
+                                .background(OffsetTheme.emerald, in: Capsule())
                         }
                     }
                     if let detail = offerDetail(id: id) {
@@ -925,30 +988,45 @@ struct PremiumUnlockView: View {
                     .font(.title3.weight(.bold))
                     .monospacedDigit()
             }
-            .foregroundStyle(highlighted ? Color.white : OffsetTheme.text)
+            .foregroundStyle(OffsetTheme.text)
             .padding(.horizontal, 18)
             .padding(.vertical, 16)
             .frame(maxWidth: .infinity, minHeight: 68)
             .background(
-                highlighted ? OffsetTheme.emerald : OffsetTheme.surface,
+                selected ? OffsetTheme.savingsTint : OffsetTheme.surface,
                 in: RoundedRectangle(cornerRadius: 14, style: .continuous)
             )
             .overlay {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(highlighted ? OffsetTheme.emerald : OffsetTheme.outline, lineWidth: highlighted ? 0 : 1)
+                    .stroke(selected ? OffsetTheme.emerald : OffsetTheme.outline, lineWidth: selected ? 2 : 1)
             }
         }
         .buttonStyle(.plain)
-        .disabled(!subscriptions.canPurchase(productID: id) || isBusy)
-        .opacity(subscriptions.canPurchase(productID: id) && !isBusy ? 1 : 0.45)
+        .disabled(!subscriptions.canPurchase(productID: id))
+        .opacity(subscriptions.canPurchase(productID: id) ? 1 : 0.45)
         .accessibilityIdentifier(
             id == configuration.revenueCatAnnualProductID ? "paywall.annual" : "paywall.monthly"
         )
+        .accessibilityValue(selected ? "Selected" : "Not selected")
+    }
+
+    private var selectedPlan: String? {
+        if let selectedPlanID, displayedPlanIDs.contains(selectedPlanID) {
+            return selectedPlanID
+        }
+        if displayedPlanIDs.contains(configuration.revenueCatAnnualProductID) {
+            return configuration.revenueCatAnnualProductID
+        }
+        return displayedPlanIDs.first
+    }
+
+    private func planName(for id: String) -> String {
+        id == configuration.revenueCatAnnualProductID ? "Annual" : "Monthly"
     }
 
     private var displayedPlanIDs: [String] {
 #if DEBUG
-        if !ProcessInfo.processInfo.arguments.contains("-use-live-store") {
+        if ProcessInfo.processInfo.arguments.contains(where: { $0.hasPrefix("-ui-testing-") }) {
             if ProcessInfo.processInfo.arguments.contains("-ui-testing-annual-only") {
                 return [configuration.revenueCatAnnualProductID]
             }
@@ -961,12 +1039,13 @@ struct PremiumUnlockView: View {
 
     private func displayPrice(id: String) -> String {
         if let product = subscriptions.product(id: id) {
-            return product.localizedPriceString
+            let cadence = id == configuration.revenueCatAnnualProductID ? "year" : "month"
+            return "\(product.localizedPriceString)/\(cadence)"
         }
 
 #if DEBUG
-        if !ProcessInfo.processInfo.arguments.contains("-use-live-store") {
-            return id == configuration.revenueCatAnnualProductID ? "$39.99" : "$4.99"
+        if ProcessInfo.processInfo.arguments.contains(where: { $0.hasPrefix("-ui-testing-") }) {
+            return id == configuration.revenueCatAnnualProductID ? "$39.99/year" : "$4.99/month"
         }
 #endif
 

@@ -28,6 +28,18 @@ enum CoverageService {
         return assessment(for: project, profile: profile, dataset: dataset)
     }
 
+    static func currentAssessment(for project: ProjectType, profile: UserProfile) -> CoverageAssessment {
+        guard let dataset = try? IncentiveDatasetStore.loadCurrent() else {
+            return .init(
+                confidence: .unsupported,
+                title: "Coverage unavailable",
+                message: "Offset could not load its coverage record. No completeness claim is being made.",
+                isProductionMarket: false
+            )
+        }
+        return assessment(for: project, profile: profile, dataset: dataset)
+    }
+
     static func assessment(
         for project: ProjectType,
         profile: UserProfile,
@@ -56,7 +68,16 @@ enum CoverageService {
             )
         }
 
-        let resolvedConfidence = confidence(for: best.status)
+        let itemConfidence = confidence(for: best.status)
+        // A verified individual program is not the same as comprehensive market
+        // coverage. Never present a partial launch state as fully verified.
+        let resolvedConfidence: CoverageAssessment.Confidence = if isProductionMarket {
+            itemConfidence
+        } else {
+            itemConfidence.rawValue > CoverageAssessment.Confidence.partial.rawValue
+                ? .partial
+                : itemConfidence
+        }
         let marketSuffix = isProductionMarket
             ? ""
             : " This state remains a partial-coverage market, so local and regional programs may be missing."

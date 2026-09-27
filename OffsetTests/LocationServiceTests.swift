@@ -60,4 +60,19 @@ struct LocationServiceTests {
             try LocationService(catalog: LocationCatalog(schemaVersion: 2, stateZIPRanges: [], utilityProviders: []))
         }
     }
+
+    @Test func rejectsDuplicateRemoteUtilityIdentifiers() {
+        let catalog = LocationCatalog(
+            schemaVersion: 1,
+            stateZIPRanges: [StateZIPRange(state: "NY", ranges: [ZIPPrefixRange(lower: 100, upper: 149)])],
+            utilityProviders: [
+                UtilityProvider(id: "duplicate", name: "First", state: "NY"),
+                UtilityProvider(id: "duplicate", name: "Second", state: "NY")
+            ]
+        )
+
+        #expect(throws: LocationCatalogError.self) {
+            try LocationService(catalog: catalog)
+        }
+    }
 }

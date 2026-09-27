@@ -24,6 +24,19 @@ struct ProgramStackingPolicy: Sendable {
         })
     }
 
+    static func current() -> Self {
+        guard let dataset = try? IncentiveDatasetStore.loadCurrent() else { return Self(rules: []) }
+        return Self(rules: dataset.stackingRules.map {
+            ProgramStackingRule(
+                programA: $0.programA,
+                programB: $0.programB,
+                relationship: $0.relationship,
+                notes: $0.notes,
+                isVerified: $0.verified == 1
+            )
+        })
+    }
+
     func resolvingConflicts(
         in programs: [Program],
         standaloneSavings: (Program) -> Double

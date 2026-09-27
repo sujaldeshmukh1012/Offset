@@ -1,8 +1,8 @@
 #include "Shared.xcconfig"
 
-// RevenueCat public SDK keys are safe to embed in an app, but keeping the key
-// here avoids source literals and makes environment switching explicit.
-REVENUECAT_API_KEY = test_fpfYszFlxcRaJIMHjFtJnLwnlPo
+// Use the real App Store RevenueCat app from ignored Secrets.xcconfig.
+// There is intentionally no checked-in Test Store key.
+REVENUECAT_API_KEY =
 ONESIGNAL_APP_ID = REPLACE_WITH_ONESIGNAL_APP_ID
 
 APS_ENVIRONMENT = development
@@ -11,5 +11,5 @@ APS_ENVIRONMENT = development
 // installable today; override it in Secrets.xcconfig once the paid team is live.
 CODE_SIGN_ENTITLEMENTS = Offset/Offset.Personal.entitlements
 
-// Local values take precedence over the checked-in development defaults.
+// Local values provide the official public SDK key and OneSignal App ID.
 #include? "Secrets.xcconfig"

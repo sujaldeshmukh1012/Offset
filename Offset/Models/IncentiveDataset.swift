@@ -143,8 +143,25 @@ enum IncentiveDatasetError: Error, Equatable {
 }
 
 struct IncentiveDatasetStore {
+    static func loadCurrent(
+        bundle: Bundle = .main,
+        fileManager: FileManager = .default
+    ) throws -> IncentiveDataset {
+        if let cached = try? SupabaseCatalogCache.cachedIncentiveData(fileManager: fileManager),
+           let dataset = try? decode(cached) {
+            return dataset
+        }
+        return try loadBundled(bundle: bundle)
+    }
+
     static func loadBundled(bundle: Bundle = .main) throws -> IncentiveDataset {
-        guard let url = bundle.url(forResource: "offset_seed", withExtension: "json") else {
+#if DEBUG
+        let isUITesting = ProcessInfo.processInfo.arguments.contains { $0.hasPrefix("-ui-testing-") }
+        let resourceName = isUITesting ? "offset_seed_debug" : "offset_seed"
+#else
+        let resourceName = "offset_seed"
+#endif
+        guard let url = bundle.url(forResource: resourceName, withExtension: "json") else {
             throw ProgramStoreError.resourceNotFound("offset_seed")
         }
         return try decode(Data(contentsOf: url))
@@ -642,7 +659,7 @@ struct IncentiveDatasetStore {
         return steps
     }
 
-    private static func appUtilityID(_ sourceID: String) -> String {
+    static func appUtilityID(_ sourceID: String) -> String {
         switch sourceID {
         case "ny_national_grid": "national-grid-ny"
         case "ny_coned": "con-edison"
