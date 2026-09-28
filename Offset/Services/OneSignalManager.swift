@@ -5,8 +5,7 @@ import UIKit
 /// The single boundary around OneSignal SDK APIs.
 final class OneSignalManager: NSObject,
     OSNotificationClickListener,
-    OSNotificationLifecycleListener,
-    OSPushSubscriptionObserver
+    OSNotificationLifecycleListener
 {
     static let shared = OneSignalManager()
 
@@ -21,8 +20,6 @@ final class OneSignalManager: NSObject,
         OneSignal.initialize(appID, withLaunchOptions: launchOptions)
         OneSignal.Notifications.addClickListener(self)
         OneSignal.Notifications.addForegroundLifecycleListener(self)
-        OneSignal.User.pushSubscription.addObserver(self)
-        evaluateRegistration(OneSignal.User.pushSubscription.id)
     }
 
     func requestPermission() async -> Bool {
@@ -37,15 +34,6 @@ final class OneSignalManager: NSObject,
     var pushSubscriptionID: String? {
         guard isConfigured else { return nil }
         return OneSignal.User.pushSubscription.id
-    }
-
-    func announceRegistrationIfAvailable() {
-        guard isConfigured else { return }
-        evaluateRegistration(OneSignal.User.pushSubscription.id)
-    }
-
-    func onPushSubscriptionDidChange(state: OSPushSubscriptionChangedState) {
-        evaluateRegistration(state.current.id)
     }
 
     func synchronizeUser(externalID: String, desiredTags: [String: String], managedTagKeys: Set<String>) {
@@ -79,21 +67,4 @@ final class OneSignalManager: NSObject,
         }
     }
 
-    private func evaluateRegistration(_ subscriptionID: String?) {
-        guard let subscriptionID,
-              !subscriptionID.isEmpty,
-              !subscriptionID.hasPrefix("local-") else { return }
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(
-                name: .offsetOneSignalRegistrationCompleted,
-                object: subscriptionID
-            )
-        }
-    }
-}
-
-extension Notification.Name {
-    static let offsetOneSignalRegistrationCompleted = Notification.Name(
-        "offset.onesignal.registration-completed"
-    )
 }
