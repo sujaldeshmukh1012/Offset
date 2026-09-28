@@ -101,6 +101,13 @@ final class SubscriptionService: ObservableObject {
         do {
             let result = try await Purchases.shared.logIn(appUserID)
             apply(result.customerInfo)
+            if !hasPremiumAccess {
+                // A subscriber may have purchased before the Supabase-backed
+                // RevenueCat identity was available. Silently reconcile the
+                // App Store receipt so Restore Purchases is only a recovery
+                // action, not a required launch step.
+                apply(try await Purchases.shared.syncPurchases())
+            }
         } catch {
             applyAccess(.unavailable(Self.friendlyMessage(for: error)))
             state = .failed("Premium identity verification failed. Please try again.")
