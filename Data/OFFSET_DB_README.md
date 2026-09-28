@@ -4,14 +4,15 @@ Generated: 2026-09-13T18:04:00-04:00
 
 ## Files
 
-- `offset_seed.json`: canonical normalized premium dataset uploaded to private
-  Supabase Storage. It is deliberately excluded from the iOS target.
+- `offset_seed.json`: canonical normalized dataset bundled for free matching and
+  uploaded to private Supabase Storage for entitlement-gated live updates.
 - `offset_schema.sql`: schema only.
 - `OffsetDatabase.swift`: optional read-only SQLite wrapper retained for a future generated database.
 
 The discovery handoff referenced `offset_incentives.sqlite` and `offset_seed.sql`, but neither
-file is present in this folder. The current app receives this JSON through an
-entitlement-verifying Edge Function; it does not depend on a missing generated database.
+file is present in this folder. The app bundles the verified catalog for free
+matching and can receive newer revisions through an entitlement-verifying Edge
+Function; it does not depend on a missing generated database.
 
 ## Current contents
 
@@ -96,9 +97,9 @@ This seed is an engineering dataset, not tax/legal advice. Incentive funding, eq
 
 ## iOS integration
 
-`Data/offset_seed.json` is excluded from Copy Bundle Resources. The bundled
-`Offset/Resources/offset_seed.json` is a non-premium bootstrap with zero program
-records. `IncentiveDatasetStore` performs schema, uniqueness, foreign-key, URL,
-amount, and embedded-JSON checks before a server-authorized premium catalog is
-installed for the current session. A malformed or unauthorized response is
-ignored. See `SUPABASE_CATALOG_SETUP.md` for deployment and access-control rules.
+`Offset/Resources/offset_seed.json` contains the verified matching catalog used
+by every tier. `IncentiveDatasetStore` performs schema, uniqueness, foreign-key,
+URL, amount, and embedded-JSON checks. Premium users can install a newer catalog
+revision after server authorization; malformed or unauthorized responses are
+ignored. Complete program guidance and saved-project workflows remain gated in
+the app. See `SUPABASE_CATALOG_SETUP.md` for update deployment and access rules.

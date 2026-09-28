@@ -22,7 +22,7 @@ enum SupabaseCatalogError: LocalizedError, Equatable {
         case .incompatibleUtilityCatalog(let utilityIDs):
             "The location catalog is missing supported utilities: \(utilityIDs.joined(separator: ", "))."
         case .premiumRequired:
-            "An active Offset Premium subscription is required for rebate data."
+            "An active Offset Premium subscription is required for live catalog updates."
         case .invalidCatalogEnvelope:
             "The secure catalog service returned an invalid response."
         }
@@ -199,11 +199,11 @@ final class SupabaseCatalogService: ObservableObject {
 
     var statusDescription: String {
         switch state {
-        case .restricted: "Premium rebate data is downloaded only after subscription verification."
+        case .restricted: "Using the included verified catalog. Premium unlocks complete details and saved projects."
         case .cached: "Using the latest entitlement-verified catalog saved for this session."
         case .refreshing: "Verifying Premium and checking for rebate updates…"
         case .current(let date): "Premium rebate data verified \(date.formatted(date: .abbreviated, time: .shortened))."
-        case .unavailable: "Premium rebate data could not be verified. No protected catalog was loaded."
+        case .unavailable: "The live catalog update could not be verified. The included catalog remains available."
         }
     }
 

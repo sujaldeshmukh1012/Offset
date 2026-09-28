@@ -271,7 +271,7 @@ struct SavedProjectDetailView: View {
                let matches = experience?.matches(for: project, profile: profile),
                !matches.isEmpty {
                 ForEach(matches) { match in
-                    if subscriptions.hasPremiumAccess || match.program.level == .federal {
+                    if subscriptions.hasPremiumAccess {
                         NavigationLink {
                             ProgramDetailView(program: match.program, estimatedSavingsUSD: match.estimatedSavingsUSD)
                         } label: {
@@ -301,7 +301,7 @@ struct SavedProjectDetailView: View {
             VStack(alignment: .leading, spacing: 12) {
                 OffsetEyebrow(text: "Other programs")
                 ForEach(relatedPrograms) { program in
-                    if subscriptions.hasPremiumAccess || program.level == .federal {
+                    if subscriptions.hasPremiumAccess {
                         NavigationLink {
                             ProgramDetailView(program: program)
                         } label: {
@@ -614,7 +614,7 @@ private struct ProjectChecklistCard: View {
                     .foregroundStyle(OffsetTheme.secondaryText)
             } else {
                 ForEach(Array(groups.enumerated()), id: \.element.id) { groupIndex, group in
-                    if hasPremiumAccess || group.program.level == .federal {
+                    if hasPremiumAccess {
                         VStack(alignment: .leading, spacing: 10) {
                             NavigationLink {
                                 ProgramDetailView(program: group.program, estimatedSavingsUSD: group.match.estimatedSavingsUSD)
@@ -657,7 +657,7 @@ private struct ProjectChecklistCard: View {
                         }
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel("Locked \(levelName(group.program.level).lowercased()) checklist details")
-                        .accessibilityHint("Unlock full savings to view these claim steps")
+                        .accessibilityHint("Unlock complete details to view these claim steps")
                     }
 
                     if groupIndex < groups.count - 1 { Divider() }
@@ -669,7 +669,7 @@ private struct ProjectChecklistCard: View {
     }
 
     private var visibleGroups: [ProjectExperienceService.ChecklistGroup] {
-        groups.filter { hasPremiumAccess || $0.program.level == .federal }
+        groups.filter { _ in hasPremiumAccess }
     }
 
     private var progressText: String {
@@ -761,13 +761,13 @@ private struct LockedProgramCard: View {
                 .fill(OffsetTheme.outline.opacity(0.3))
                 .frame(height: 11)
                 .blur(radius: 2)
-            Button("Unlock full savings", action: unlock)
+            Button("Unlock complete details", action: unlock)
                 .buttonStyle(OffsetSecondaryButtonStyle())
         }
         .offsetCard()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Locked \(levelName.lowercased()) incentive match")
-        .accessibilityHint("Unlock full savings to reveal the program")
+        .accessibilityHint("Unlock complete eligibility and claim details")
     }
 
     private var levelName: String {

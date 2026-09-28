@@ -53,8 +53,9 @@ Offset provides estimates for planning purposes, not tax, legal, or financial
 advice. Program administrators determine final eligibility and benefit amounts.
 
 Offset Premium is available as a monthly or annual auto-renewable subscription.
-Premium reveals matched state and utility values, the complete application order,
-the estimated final price, full checklist details, and unlimited saved projects.
+Free users can see possible matches and estimated savings. Premium unlocks
+complete eligibility, official sources, deadlines, claim guidance, saved
+projects, and progress checklists.
 Payment is charged to your Apple Account. Subscriptions renew automatically
 unless canceled at least 24 hours before the end of the current period. You can
 manage or cancel your subscription in your Apple Account settings.
@@ -85,8 +86,8 @@ Products:
 
 | Duration | Reference name | Product ID | Localized display name | Description | Intended U.S. price |
 | --- | --- | --- | --- | --- | ---: |
-| 1 month | Offset Premium Monthly | `com.sujal.Offset.premium.monthly` | Offset Premium Monthly | Full savings, checklists, unlimited projects. | $4.99 |
-| 1 year | Offset Premium Annual | `com.sujal.Offset.premium.annual` | Offset Premium Annual | Full savings, checklists, unlimited projects. | $39.99 |
+| 1 month | Offset Premium Monthly | `com.sujal.Offset.premium.monthly` | Offset Premium Monthly | Full details, claim guidance, saved projects. | $4.99 |
+| 1 year | Offset Premium Annual | `com.sujal.Offset.premium.annual` | Offset Premium Annual | Full details, claim guidance, saved projects. | $39.99 |
 
 Set availability, tax category, localization, and the subscription-group
 localization. Do not advertise a free trial unless an introductory offer is
@@ -158,9 +159,10 @@ project sticker price, saved project name, or checklist text. OneSignal receives
 a random local identifier plus lifecycle-stage and Premium-access tags.
 RevenueCat receives purchase and entitlement information. Apple processes
 payment-card details. Supabase Auth creates a random anonymous installation
-identity, and an authenticated Edge Function delivers private catalog JSON only
-after verifying `offset_pro`. Offset does not include profile or project values
-in those requests.
+identity. The release app includes verified data for free matching; an
+authenticated Edge Function delivers newer catalog revisions only after
+verifying `offset_pro`. Offset does not include profile or project values in
+those requests.
 
 ## App Review information
 
@@ -171,7 +173,7 @@ profile, then select a project and enter a sticker price. New York ZIP `10001`
 provides the broadest representative catalog path. Results include links to the
 official program sources and clearly label estimates.
 
-To review Premium, tap **Unlock full savings** on a calculated result. The paywall
+To review Premium, tap **Unlock details and save** on a calculated result. The paywall
 contains monthly and annual subscriptions and Restore Purchases. Both products
 are included with this version's review submission and attached to RevenueCat's
 `offset_pro` entitlement. A successful purchase updates every gate without an app

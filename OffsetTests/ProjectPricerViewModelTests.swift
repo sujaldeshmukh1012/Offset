@@ -22,15 +22,15 @@ struct ProjectPricerViewModelTests {
         #expect(model.status == .invalidPrice("Enter a price greater than $0."))
     }
 
-    @Test func freePresentationNeverIncludesLockedAmountsInTotals() {
+    @Test func freePresentationShowsMatchedProgramsAndEstimatedSavings() {
         let model = makeModel()
         model.setPriceText("10000")
         model.calculate(profile: profile, hasPremiumAccess: false)
 
         #expect(model.status == .results)
-        #expect(model.rows.map(\.id) == ["locked-utility", "locked-state", "federal"])
-        #expect(model.visibleSavingsUSD == 2_000)
-        #expect(model.visibleNetPriceUSD == 8_000)
+        #expect(model.rows.map(\.id) == ["utility", "state", "federal"])
+        #expect(model.visibleSavingsUSD == 3_520)
+        #expect(model.visibleNetPriceUSD == 6_480)
         #expect(model.hasLockedMatches)
     }
 

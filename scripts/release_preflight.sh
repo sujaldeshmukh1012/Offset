@@ -200,15 +200,15 @@ else
     fail "Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY in ignored Secrets.xcconfig"
 fi
 
-if jq -e '.programs | length == 0' "$public_seed" >/dev/null \
+if jq -e '(.programs | length) > 0 and (.incentive_tiers | length) > 0' "$public_seed" >/dev/null \
    && ! rg -q 'Data/offset_seed\.json in Resources' "$project_file" \
    && rg -q 'CONFIGURATION.*Debug.*offset_seed_debug\.json' "$project_file" \
    && rg -q 'public[[:space:]]*=[[:space:]]*false' "$repo_root/supabase/migrations/20260925010000_lock_premium_catalog.sql" \
    && rg -q 'Offset catalogs are server only' "$repo_root/supabase/migrations/20260925010000_lock_premium_catalog.sql" \
    && rg -q 'api\.revenuecat\.com/v1/subscribers' "$repo_root/supabase/functions/premium-catalog/index.ts"; then
-    pass "Premium catalog is excluded from the app and server-gated"
+    pass "Public matching catalog is bundled and live catalog updates remain entitlement-gated"
 else
-    fail "Premium catalog must remain private, unbundled, and entitlement-gated"
+    fail "Bundle verified matching data and keep live catalog updates private and entitlement-gated"
 fi
 
 if rg -q 'Supabase' "$privacy_page" \

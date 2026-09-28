@@ -93,17 +93,17 @@ struct AppStateTests {
         #expect(state.persistenceErrorMessage != nil)
     }
 
-    @Test func freeTierAllowsOneProjectAndPremiumAllowsMore() {
+    @Test func savingProjectsRequiresPremium() {
         let state = AppState(store: MemoryAppStateStore())
         let first = SavedProject(name: "Heat pump", projectType: .heatPump, stickerPriceUSD: 10_000)
         let second = SavedProject(name: "Solar", projectType: .solar, stickerPriceUSD: 20_000)
 
-        #expect(state.canCreateProject(hasPremiumAccess: false))
-        #expect(state.createProject(first, hasPremiumAccess: false))
         #expect(!state.canCreateProject(hasPremiumAccess: false))
+        #expect(!state.createProject(first, hasPremiumAccess: false))
         #expect(!state.createProject(second, hasPremiumAccess: false))
-        #expect(state.savedProjects == [first])
+        #expect(state.savedProjects.isEmpty)
         #expect(state.canCreateProject(hasPremiumAccess: true))
+        #expect(state.createProject(first, hasPremiumAccess: true))
         #expect(state.createProject(second, hasPremiumAccess: true))
         #expect(state.savedProjects.count == 2)
     }

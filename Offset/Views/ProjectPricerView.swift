@@ -375,7 +375,7 @@ struct ProjectPricerView: View {
                     .foregroundStyle(OffsetTheme.secondaryText)
 
                 ForEach(programs) { program in
-                    if subscriptions.hasPremiumAccess || program.level == .federal {
+                    if subscriptions.hasPremiumAccess {
                         NavigationLink {
                             ProgramDetailView(program: program)
                         } label: {
@@ -402,17 +402,21 @@ struct ProjectPricerView: View {
                         Button { showingUnlock = true } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "lock.fill")
-                                Text("Additional \(program.level.displayName.lowercased()) program")
-                                    .font(.subheadline.weight(.semibold))
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(program.name)
+                                        .font(.subheadline.weight(.semibold))
+                                    Text(program.status.displayName)
+                                        .font(.caption)
+                                }
                                 Spacer()
-                                Text("Verify")
+                                Text("Details")
                                     .font(.caption.weight(.semibold))
                             }
                             .foregroundStyle(OffsetTheme.secondaryText)
                             .padding(.vertical, 6)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityHint("Unlock full program eligibility and source details")
+                        .accessibilityHint("Unlock complete program eligibility and source details")
                     }
                     if program.id != programs.last?.id { Divider() }
                 }
@@ -456,7 +460,7 @@ struct ProjectPricerView: View {
             Label(
                 appState.canCreateProject(hasPremiumAccess: subscriptions.hasPremiumAccess)
                     ? "Save this project"
-                    : "Unlock to save another project",
+                    : "Unlock to save this project",
                 systemImage: appState.canCreateProject(hasPremiumAccess: subscriptions.hasPremiumAccess)
                     ? "bookmark.fill"
                     : "lock.fill"
@@ -483,7 +487,7 @@ struct ProjectPricerView: View {
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(subscriptions.hasPremiumAccess ? "Your estimated net price" : "Your visible price so far")
+                Text("Your estimated net price")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(OffsetTheme.secondaryText)
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
@@ -505,12 +509,22 @@ struct ProjectPricerView: View {
                 ForEach(viewModel.rows) { row in
                     switch row {
                     case .exact(let exact):
-                        NavigationLink {
-                            ProgramDetailView(program: exact.program, estimatedSavingsUSD: exact.savingsUSD)
-                        } label: {
-                            ExactIncentiveRow(row: exact)
+                        Group {
+                            if subscriptions.hasPremiumAccess {
+                                NavigationLink {
+                                    ProgramDetailView(program: exact.program, estimatedSavingsUSD: exact.savingsUSD)
+                                } label: {
+                                    ExactIncentiveRow(row: exact, showsLockedDetails: false)
+                                }
+                                .buttonStyle(.plain)
+                            } else {
+                                Button { showingUnlock = true } label: {
+                                    ExactIncentiveRow(row: exact, showsLockedDetails: true)
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityHint("Unlock complete eligibility, source, deadline, and claim details")
+                            }
                         }
-                        .buttonStyle(.plain)
                         .opacity(revealStage >= 2 ? 1 : 0)
                     case .locked(_, let level):
                         LockedIncentiveRow(level: level)
@@ -531,13 +545,13 @@ struct ProjectPricerView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 totalRow(
-                    subscriptions.hasPremiumAccess ? "Total savings" : "Visible federal savings",
+                    "Total estimated savings",
                     value: viewModel.visibleSavingsUSD,
                     highlighted: false
                 )
                 Divider().overlay(Color.white.opacity(0.18))
                 totalRow(
-                    subscriptions.hasPremiumAccess ? "Final net price" : "Visible price so far",
+                    "Estimated net price",
                     value: viewModel.visibleNetPriceUSD,
                     highlighted: true
                 )
@@ -551,10 +565,10 @@ struct ProjectPricerView: View {
                 Button {
                     showingUnlock = true
                 } label: {
-                    Label("Unlock full savings", systemImage: "lock.open.fill")
+                    Label("Unlock details and save", systemImage: "lock.open.fill")
                 }
                 .buttonStyle(OffsetPrimaryButtonStyle())
-                .accessibilityHint("Shows subscription options without revealing locked savings")
+                .accessibilityHint("Shows subscription options for complete program details and saved projects")
                 .accessibilityIdentifier("pricer.unlock")
                 .opacity(revealStage >= 3 ? 1 : 0)
             }
@@ -731,6 +745,7 @@ struct EligibilityQuestionRow: View {
 
 private struct ExactIncentiveRow: View {
     let row: ProjectPricerViewModel.ExactResultRow
+    let showsLockedDetails: Bool
 
     var body: some View {
         HStack(spacing: 12) {
@@ -752,6 +767,12 @@ private struct ExactIncentiveRow: View {
             Text("−\(row.savingsUSD.formatted(.currency(code: "USD").precision(.fractionLength(0))))")
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(OffsetTheme.emerald)
+            if showsLockedDetails {
+                Image(systemName: "lock.fill")
+                    .font(.caption)
+                    .foregroundStyle(OffsetTheme.mutedText)
+                    .accessibilityHidden(true)
+            }
         }
         .padding(.vertical, 12)
         .accessibilityElement(children: .combine)
@@ -841,10 +862,10 @@ struct PremiumUnlockView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
-                        premiumBenefit("All matched incentives", icon: "checkmark.seal.fill")
-                        premiumBenefit("Application order and net cost", icon: "list.number")
-                        premiumBenefit("Claim guidance", icon: "doc.text.fill")
-                        premiumBenefit("Unlimited saved projects", icon: "bookmark.fill")
+                        premiumBenefit("Complete eligibility details", icon: "checkmark.seal.fill")
+                        premiumBenefit("Official sources and deadlines", icon: "list.number")
+                        premiumBenefit("Step-by-step claim guidance", icon: "doc.text.fill")
+                        premiumBenefit("Saved projects and checklists", icon: "bookmark.fill")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .offsetCard(padding: 18)

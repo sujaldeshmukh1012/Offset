@@ -249,16 +249,18 @@ final class OffsetUITests: XCTestCase {
     }
 
     @MainActor
-    func testPaywallPurchaseUnlocksExistingResultWithoutRestart() throws {
+    func testFreeMatchedResultOpensPaywallAndPurchaseUnlocks() throws {
         let app = completeOnboarding(launchArguments: ["-ui-testing-reset-state"])
         calculateNewYorkSolar(in: app)
 
         XCTAssertTrue(app.buttons["pricer.unlock"].waitForExistence(timeout: 3))
-        XCTAssertFalse(app.staticTexts["New York Solar Energy System Equipment Credit"].exists)
-        XCTAssertFalse(app.staticTexts["$9,000"].exists)
-        XCTAssertFalse(app.staticTexts["−$3,000"].exists)
-        app.buttons["pricer.unlock"].tap()
-        XCTAssertTrue(app.navigationBars["Offset Premium"].waitForExistence(timeout: 2))
+        let programName = app.staticTexts["New York Solar Energy System Equipment Credit"]
+        XCTAssertTrue(programName.exists)
+        XCTAssertTrue(app.staticTexts["$9,000"].exists)
+        XCTAssertTrue(app.staticTexts["−$3,000"].exists)
+        programName.tap()
+        let paywall = app.navigationBars["Offset Premium"]
+        XCTAssertTrue(paywall.waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["paywall.annual"].exists)
         XCTAssertTrue(app.buttons["paywall.monthly"].exists)
         XCTAssertTrue(app.buttons["paywall.redeem-offer-code"].exists)
@@ -267,8 +269,13 @@ final class OffsetUITests: XCTestCase {
         XCTAssertEqual(app.buttons["paywall.monthly"].value as? String, "Selected")
         app.buttons["paywall.continue"].tap()
 
-        XCTAssertTrue(app.staticTexts["New York Solar Energy System Equipment Credit"].waitForExistence(timeout: 3))
+        XCTAssertTrue(programName.waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["$9,000"].exists)
+        if paywall.exists {
+            app.buttons["Close"].tap()
+        }
+        XCTAssertTrue(paywall.waitForNonExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["pricer.unlock"].waitForNonExistence(timeout: 3))
     }
 
     @MainActor
@@ -378,25 +385,13 @@ final class OffsetUITests: XCTestCase {
     }
 
     @MainActor
-    func testFreeTierSecondSavedProjectOpensPaywall() throws {
+    func testFreeTierSavingProjectOpensPaywall() throws {
         let app = completeOnboarding()
         calculateNewYorkSolar(in: app)
 
         let saveButton = app.buttons["pricer.save-project"]
         XCTAssertTrue(saveButton.waitForExistence(timeout: 3))
         saveButton.tap()
-        XCTAssertTrue(app.navigationBars["Save project"].waitForExistence(timeout: 3))
-        app.buttons["Save"].tap()
-
-        let heatPump = app.buttons["Heat pump"]
-        for _ in 0..<6 where !heatPump.exists {
-            app.scrollViews.firstMatch.swipeDown()
-        }
-        XCTAssertTrue(heatPump.waitForExistence(timeout: 3))
-        heatPump.tap()
-        app.buttons["pricer.calculate"].tap()
-        XCTAssertTrue(app.buttons["Unlock to save another project"].waitForExistence(timeout: 3))
-        app.buttons["Unlock to save another project"].tap()
         XCTAssertTrue(app.navigationBars["Offset Premium"].waitForExistence(timeout: 3))
     }
 

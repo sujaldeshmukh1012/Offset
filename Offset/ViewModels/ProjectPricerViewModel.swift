@@ -139,33 +139,13 @@ final class ProjectPricerViewModel: ObservableObject {
         )
 
         stickerPriceUSD = price
-        hasLockedMatches = !hasPremiumAccess && completeMatches.contains { $0.program.level != .federal }
-
-        if hasPremiumAccess {
-            rows = completeMatches.map { .exact(Self.exactRow(from: $0)) }
-            visibleSavingsUSD = completeMatches.reduce(0) { $0 + $1.estimatedSavingsUSD }
-            visibleNetPriceUSD = completeMatches.last?.priceAfterUSD ?? price
-        } else {
-            let federalMatches = MatchingEngine(
-                programs: programs.filter { $0.level == .federal },
-                referenceDate: referenceDate
-            ).matches(
-                for: profile,
-                project: selectedProject,
-                stickerPriceUSD: price,
-                hasPremiumAccess: true
-            )
-            let federalByID = Dictionary(uniqueKeysWithValues: federalMatches.map { ($0.program.id, $0) })
-
-            rows = completeMatches.compactMap { match in
-                if match.program.level == .federal, let publicMatch = federalByID[match.program.id] {
-                    return .exact(Self.exactRow(from: publicMatch))
-                }
-                return .locked(id: match.program.id, level: match.program.level)
-            }
-            visibleSavingsUSD = federalMatches.reduce(0) { $0 + $1.estimatedSavingsUSD }
-            visibleNetPriceUSD = federalMatches.last?.priceAfterUSD ?? price
-        }
+        // Matching and estimated savings are part of the free experience.
+        // Premium gates the detailed program guidance and project workflow,
+        // not the result of the calculation itself.
+        rows = completeMatches.map { .exact(Self.exactRow(from: $0)) }
+        visibleSavingsUSD = completeMatches.reduce(0) { $0 + $1.estimatedSavingsUSD }
+        visibleNetPriceUSD = completeMatches.last?.priceAfterUSD ?? price
+        hasLockedMatches = !hasPremiumAccess && !completeMatches.isEmpty
 
         status = completeMatches.isEmpty ? .noMatches : .results
         calculationID = UUID()

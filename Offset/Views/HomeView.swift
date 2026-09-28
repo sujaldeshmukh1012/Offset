@@ -116,9 +116,9 @@ struct HomeView: View {
             }
 
             VStack(alignment: .leading, spacing: 9) {
-                premiumLine("Every matched incentive")
-                premiumLine("Net cost and application order")
-                premiumLine("Claim guidance and unlimited projects")
+                premiumLine("Complete eligibility and program details")
+                premiumLine("Official sources, deadlines, and claim steps")
+                premiumLine("Saved projects and progress checklists")
             }
 
             Button("Explore Premium") { showingUnlock = true }
@@ -377,14 +377,13 @@ struct OpportunityExploreView: View {
     }
 
     private func programRow(_ program: Program, index: Int, opportunity: DiscoveredOpportunity) -> some View {
-        let canReveal = subscriptions.hasPremiumAccess || program.level == .federal
         return HStack(spacing: 12) {
             Image(systemName: statusIcon(program, opportunity: opportunity))
                 .foregroundStyle(OffsetTheme.emerald)
                 .frame(width: 28)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 3) {
-                Text(canReveal ? program.name : "\(program.level.shortDisplayName) program")
+                Text(program.name)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(OffsetTheme.text)
                 Text(statusText(program, opportunity: opportunity))
@@ -393,7 +392,7 @@ struct OpportunityExploreView: View {
             }
             Spacer()
             ProgramSourceBadge(level: program.level)
-            if !canReveal {
+            if !subscriptions.hasPremiumAccess {
                 Image(systemName: "lock.fill")
                     .font(.caption)
                     .foregroundStyle(OffsetTheme.mutedText)
@@ -401,9 +400,8 @@ struct OpportunityExploreView: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(canReveal
-            ? "\(program.name), \(program.level.shortDisplayName), \(statusText(program, opportunity: opportunity))"
-            : "\(program.level.shortDisplayName) program, details locked, \(statusText(program, opportunity: opportunity))")
+        .accessibilityLabel("\(program.name), \(program.level.shortDisplayName), \(statusText(program, opportunity: opportunity))"
+            + (subscriptions.hasPremiumAccess ? "" : ", complete details locked"))
     }
 
     @ViewBuilder

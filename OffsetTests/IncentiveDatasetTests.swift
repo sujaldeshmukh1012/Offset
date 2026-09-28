@@ -10,18 +10,18 @@ struct IncentiveDatasetTests {
             .appendingPathComponent("Data/offset_seed.json")
     }
 
-    @Test func releaseBootstrapContainsNoPremiumPrograms() throws {
+    @Test func releaseBundleContainsPublicMatchingCatalog() throws {
         let publicSeedURL = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent("Offset/Resources/offset_seed.json")
         let dataset = try IncentiveDatasetStore.decode(Data(contentsOf: publicSeedURL))
 
-        #expect(dataset.programs.isEmpty)
-        #expect(dataset.sources.isEmpty)
-        #expect(dataset.incentiveTiers.isEmpty)
-        #expect(dataset.claimSteps.isEmpty)
-        #expect(dataset.stackingRules.isEmpty)
+        #expect(dataset.programs.count == 38)
+        #expect(dataset.sources.count == 33)
+        #expect(!dataset.incentiveTiers.isEmpty)
+        #expect(!dataset.claimSteps.isEmpty)
+        #expect(!dataset.stackingRules.isEmpty)
     }
 
     @Test func normalizedSeedDecodesAndPassesReferentialValidation() throws {

@@ -126,7 +126,7 @@ final class AppState: ObservableObject {
     }
 
     func canCreateProject(hasPremiumAccess: Bool) -> Bool {
-        hasPremiumAccess || savedProjects.isEmpty
+        hasPremiumAccess
     }
 
     @discardableResult

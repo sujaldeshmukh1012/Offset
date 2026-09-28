@@ -1,12 +1,12 @@
 {
   "meta": {
     "schema_version": "1",
-    "dataset_name": "Offset Public Bootstrap",
-    "generated_at": "1970-01-01T00:00:00Z",
-    "launch_states": "",
-    "source_policy": "Premium incentive records are delivered only after server-side entitlement verification.",
-    "matching_policy": "No premium incentive records are bundled.",
-    "warning": "Subscribe and connect to load verified incentive data."
+    "dataset_name": "Offset Incentive Database Seed",
+    "generated_at": "2026-09-13T18:04:00-04:00",
+    "launch_states": "NY,FL,CA",
+    "source_policy": "Primary agency/utility is source of record; aggregators are discovery/cross-check only.",
+    "matching_policy": "Only records in active_match_programs should produce automatic dollar matches.",
+    "warning": "Incentives change frequently. Revalidate dynamic records and live funding before production display."
   },
   "states": [
     {
@@ -255,12 +255,3062 @@
       "name": "Sales Tax"
     }
   ],
-  "sources": [],
-  "programs": [],
-  "program_categories": [],
-  "eligibility_rules": [],
-  "incentive_tiers": [],
-  "claim_steps": [],
-  "stacking_rules": [],
-  "coverage": []
+  "sources": [
+    {
+      "id": "src_dsire",
+      "name": "DSIRE",
+      "url": "https://www.dsireusa.org/",
+      "authority_tier": 0,
+      "source_type": "aggregator",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "official_aggregator",
+      "notes": "Discovery/cross-check only; paid API available. Do not treat as source of record."
+    },
+    {
+      "id": "src_rewiring",
+      "name": "Rewiring America Incentives API",
+      "url": "https://www.rewiringamerica.org/tools/incentive-api",
+      "authority_tier": 0,
+      "source_type": "aggregator",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "official_aggregator",
+      "notes": "Strong federal baseline, incomplete state/local/utility coverage. Cross-check only."
+    },
+    {
+      "id": "src_energy_star",
+      "name": "ENERGY STAR Rebate Finder",
+      "url": "https://www.energystar.gov/rebate-finder",
+      "authority_tier": 0,
+      "source_type": "aggregator",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "official_aggregator",
+      "notes": "Utility rebate discovery; verify against administering utility."
+    },
+    {
+      "id": "src_doe_home",
+      "name": "DOE Home Energy Rebates",
+      "url": "https://www.energy.gov/scep/home-energy-rebates-programs",
+      "authority_tier": 0,
+      "source_type": "federal_directory",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": "State rollout discovery for HOMES/HEAR."
+    },
+    {
+      "id": "src_afdc",
+      "name": "DOE Alternative Fuels Data Center",
+      "url": "https://afdc.energy.gov/laws",
+      "authority_tier": 0,
+      "source_type": "federal_directory",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": "EV/EV charging discovery; verify administering program for amounts."
+    },
+    {
+      "id": "src_nlr_deprecated",
+      "name": "NLR Incentives API (deprecated)",
+      "url": "https://developer.nrel.gov/",
+      "authority_tier": 0,
+      "source_type": "deprecated",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "deprecated",
+      "notes": "Do not use; frozen/deprecated in source inventory."
+    },
+    {
+      "id": "src_irs_obbb",
+      "name": "IRS clean-energy credit changes under Public Law 119-21",
+      "url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb",
+      "authority_tier": 1,
+      "source_type": "federal_primary",
+      "state_code": null,
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_tax_solar",
+      "name": "NY Tax: Solar Energy System Equipment Credit",
+      "url": "https://www.tax.ny.gov/pit/credits/solar_energy_system_equipment_credit.htm",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "NY",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_drive_clean",
+      "name": "NYSERDA Drive Clean Rebate",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Drive-Clean-Rebate-For-Electric-Cars-Program",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "NY",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_charge_ready",
+      "name": "NYSERDA Charge Ready NY 2.0",
+      "url": "https://www.nyserda.ny.gov/All-Programs/Charge-Ready-NY",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "NY",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_nysun",
+      "name": "NYSERDA NY-Sun",
+      "url": "https://www.nyserda.ny.gov/All-Programs/NY-Sun",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "NY",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_cleanheat",
+      "name": "NYS Clean Heat",
+      "url": "https://cleanheat.ny.gov/",
+      "authority_tier": 1,
+      "source_type": "state_utility_program",
+      "state_code": "NY",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_oru_manual",
+      "name": "Orange & Rockland NYS Clean Heat Program",
+      "url": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/clean-heating-cooling-with-heat-pumps",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ny_pseg_heat",
+      "name": "PSEG Long Island Heat Pump Rebates",
+      "url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homecomfort/heatpumps/rebates",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "NY",
+      "utility_id": "ny_psegli",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_fl_sales_tax",
+      "name": "Florida DOR Sales Tax Incentives",
+      "url": "https://www.floridarevenue.com/taxes/taxesfees/pages/sales_tax_incent.aspx",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "FL",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_fl_statute_property",
+      "name": "Florida Statutes 193.624",
+      "url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0193/Sections/0193.624.html",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "FL",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_fpl_ac",
+      "name": "FPL A/C Rebate",
+      "url": "https://www.fpl.com/save/programs/ac-rebate.html",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_fpl",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_duke_fl_home",
+      "name": "Duke Energy Florida Home Energy Improvement",
+      "url": "https://www.duke-energy.com/home/products/home-energy-improvement",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_teco",
+      "name": "Tampa Electric Rebates",
+      "url": "https://www.tampaelectric.com/residential/saveenergy/",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "trust_status": "primary",
+      "notes": "Discovery-only in V1 until individual current rebates are normalized."
+    },
+    {
+      "id": "src_jea",
+      "name": "JEA Rebates",
+      "url": "https://www.jea.com/rebates",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "trust_status": "primary",
+      "notes": "Discovery-only in V1."
+    },
+    {
+      "id": "src_ouc",
+      "name": "OUC Rebates",
+      "url": "https://www.ouc.com/residential/save-energy-water-money/rebates/",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "trust_status": "primary",
+      "notes": "Discovery-only in V1."
+    },
+    {
+      "id": "src_gru",
+      "name": "GRU Rebates",
+      "url": "https://www.gru.com/My-Home/Content/Rebates-and-Incentives-for-Homes",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "trust_status": "primary",
+      "notes": "Discovery-only in V1."
+    },
+    {
+      "id": "src_ca_heehra",
+      "name": "California Energy Commission HEEHRA",
+      "url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "CA",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ca_sgip",
+      "name": "CPUC Self-Generation Incentive Program",
+      "url": "https://www.cpuc.ca.gov/sgip",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "CA",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ca_tech",
+      "name": "TECH Clean California",
+      "url": "https://techcleanca.com/",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "CA",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ca_calevip",
+      "name": "CALeVIP",
+      "url": "https://calevip.org/",
+      "authority_tier": 1,
+      "source_type": "state_primary",
+      "state_code": "CA",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ca_cc4a",
+      "name": "Clean Cars 4 All",
+      "url": "https://ww2.arb.ca.gov/our-work/programs/clean-cars-4-all",
+      "authority_tier": 1,
+      "source_type": "state_regional_primary",
+      "state_code": "CA",
+      "utility_id": null,
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_pge_rebates",
+      "name": "PG&E Rebates and Incentives",
+      "url": "https://www.pge.com/en/save-energy-and-money/rebates-and-incentives.html",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_sce_ev",
+      "name": "SCE Pre-Owned EV Rebate",
+      "url": "https://evrebates.sce.com/",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_sce",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ladwp_ev",
+      "name": "LADWP Electric Vehicles",
+      "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_ladwp_charger",
+      "name": "LADWP Residential EV Charger Rebate",
+      "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/residential-ev-charger-rebate-program",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_smud_efficiency",
+      "name": "SMUD Improve Home Efficiency",
+      "url": "https://www.smud.org/Rebates-and-Savings-Tips/Improve-Home-Efficiency",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "trust_status": "primary",
+      "notes": null
+    },
+    {
+      "id": "src_sdge_res",
+      "name": "SDG&E Residential Energy Solutions",
+      "url": "https://marketplace.sdge.com/residential/savings-center/energy-saving-programs/res-program",
+      "authority_tier": 1,
+      "source_type": "utility_primary",
+      "state_code": "CA",
+      "utility_id": "ca_sdge",
+      "trust_status": "primary",
+      "notes": null
+    }
+  ],
+  "programs": [
+    {
+      "state_code": null,
+      "utility_id": null,
+      "administrator": "IRS",
+      "status": "expired",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": "2025-12-31",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Retained so Offset can explain why the credit is no longer available in 2026.",
+      "id": "fed_25c",
+      "name": "Energy Efficient Home Improvement Credit (§25C)",
+      "jurisdiction_level": "federal",
+      "incentive_type": "tax_credit",
+      "amount_type": "percent",
+      "description": "Federal tax credit for qualifying home energy improvements; expired for property placed in service after 2025-12-31.",
+      "source_id": "src_irs_obbb",
+      "source_url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+    },
+    {
+      "state_code": null,
+      "utility_id": null,
+      "administrator": "IRS",
+      "status": "expired",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": "2025-12-31",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fed_25d",
+      "name": "Residential Clean Energy Credit (§25D)",
+      "jurisdiction_level": "federal",
+      "incentive_type": "tax_credit",
+      "amount_type": "percent",
+      "description": "Federal residential clean-energy tax credit; expired for expenditures after 2025-12-31.",
+      "source_id": "src_irs_obbb",
+      "source_url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+    },
+    {
+      "state_code": null,
+      "utility_id": null,
+      "administrator": "IRS",
+      "status": "expired",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": "2025-09-30",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "purchase_or_tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fed_30d",
+      "name": "Clean Vehicle Credit (§30D)",
+      "jurisdiction_level": "federal",
+      "incentive_type": "tax_credit",
+      "amount_type": "tiered",
+      "description": "Federal new clean-vehicle credit; unavailable for vehicles acquired after 2025-09-30.",
+      "source_id": "src_irs_obbb",
+      "source_url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+    },
+    {
+      "state_code": null,
+      "utility_id": null,
+      "administrator": "IRS",
+      "status": "expired",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": "2025-09-30",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "purchase_or_tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fed_25e",
+      "name": "Used Clean Vehicle Credit (§25E)",
+      "jurisdiction_level": "federal",
+      "incentive_type": "tax_credit",
+      "amount_type": "tiered",
+      "description": "Federal used clean-vehicle credit; unavailable for vehicles acquired after 2025-09-30.",
+      "source_id": "src_irs_obbb",
+      "source_url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+    },
+    {
+      "state_code": null,
+      "utility_id": null,
+      "administrator": "IRS",
+      "status": "expired",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": "2026-06-30",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fed_30c",
+      "name": "Alternative Fuel Refueling Property Credit (§30C)",
+      "jurisdiction_level": "federal",
+      "incentive_type": "tax_credit",
+      "amount_type": "percent",
+      "description": "Federal alternative-fuel refueling property credit; unavailable for property placed in service after 2026-06-30.",
+      "source_id": "src_irs_obbb",
+      "source_url": "https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": null,
+      "administrator": "New York State Department of Taxation and Finance",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": 5000,
+      "amount_unit": "USD",
+      "amount_formula": "min(0.25 * qualified_expenditures, 5000)",
+      "claim_timing": "state_tax_filing",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "ny_solar_tax_credit",
+      "name": "New York Solar Energy System Equipment Credit",
+      "jurisdiction_level": "state",
+      "incentive_type": "tax_credit",
+      "amount_type": "percent",
+      "description": "25% of qualified residential solar energy system expenditures, capped at $5,000; nonrefundable with carryforward up to five years.",
+      "source_id": "src_ny_tax_solar",
+      "source_url": "https://www.tax.ny.gov/pit/credits/solar_energy_system_equipment_credit.htm"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": null,
+      "administrator": "NYSERDA",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 500,
+      "amount_max": 2000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "point_of_sale",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "ny_drive_clean",
+      "name": "Drive Clean Rebate",
+      "jurisdiction_level": "state",
+      "incentive_type": "point_of_sale_rebate",
+      "amount_type": "tiered",
+      "description": "Point-of-sale rebate on eligible new electric vehicles purchased or leased through participating New York dealers.",
+      "source_id": "src_ny_drive_clean",
+      "source_url": "https://www.nyserda.ny.gov/All-Programs/Drive-Clean-Rebate-For-Electric-Cars-Program"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": null,
+      "administrator": "NYSERDA",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": "2026-12-31",
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1000,
+      "amount_max": 4000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "post_install_after_application",
+      "requires_preapproval": 1,
+      "requires_contractor": 0,
+      "notes": "Not a general home-charger rebate. Program/funding rules should be rechecked at match time.",
+      "id": "ny_charge_ready_2",
+      "name": "Charge Ready NY 2.0",
+      "jurisdiction_level": "state",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Level 2 charging incentive for eligible workplace, multifamily, and hotel sites; per-port amount varies by use and disadvantaged-community status.",
+      "source_id": "src_ny_charge_ready",
+      "source_url": "https://www.nyserda.ny.gov/All-Programs/Charge-Ready-NY"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": null,
+      "administrator": "NYSERDA",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "current_NY_Sun_block_rate * eligible_system_capacity; may include Affordable Solar adders",
+      "claim_timing": "contractor_applied",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Never hard-code a dollar value. Resolve live block/rate before showing savings.",
+      "id": "ny_nysun_residential",
+      "name": "NY-Sun Residential Solar Incentive",
+      "jurisdiction_level": "state",
+      "incentive_type": "upfront_project_incentive",
+      "amount_type": "formula",
+      "description": "Upfront solar incentive generally handled by a participating contractor; amount varies by region, project size, sector, and live MW block.",
+      "source_id": "src_ny_nysun",
+      "source_url": "https://www.nyserda.ny.gov/All-Programs/NY-Sun"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_national_grid",
+      "administrator": "National Grid",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "utility-specific incentive schedule based on system type, sizing, project configuration, and current program rules",
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Resolve current utility-specific amount at match time; do not infer one utility’s rate from another.",
+      "id": "ny_national_grid_clean_heat",
+      "name": "National Grid NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Utility-administered NYS Clean Heat incentives for eligible heat-pump projects in National Grid territory.",
+      "source_id": "src_ny_cleanheat",
+      "source_url": "https://cleanheat.ny.gov/"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_coned",
+      "administrator": "Con Edison",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "utility-specific incentive schedule based on system type, sizing, project configuration, and current program rules",
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Resolve current utility-specific amount at match time; do not infer one utility’s rate from another.",
+      "id": "ny_coned_clean_heat",
+      "name": "Con Edison NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Utility-administered NYS Clean Heat incentives for eligible heat-pump projects in Con Edison territory.",
+      "source_id": "src_ny_cleanheat",
+      "source_url": "https://cleanheat.ny.gov/"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_nyseg",
+      "administrator": "NYSEG",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "utility-specific incentive schedule based on system type, sizing, project configuration, and current program rules",
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Resolve current utility-specific amount at match time; do not infer one utility’s rate from another.",
+      "id": "ny_nyseg_clean_heat",
+      "name": "NYSEG NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Utility-administered NYS Clean Heat incentives for eligible heat-pump projects in NYSEG territory.",
+      "source_id": "src_ny_cleanheat",
+      "source_url": "https://cleanheat.ny.gov/"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_rge",
+      "administrator": "RG&E",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "utility-specific incentive schedule based on system type, sizing, project configuration, and current program rules",
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Resolve current utility-specific amount at match time; do not infer one utility’s rate from another.",
+      "id": "ny_rge_clean_heat",
+      "name": "RG&E NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Utility-administered NYS Clean Heat incentives for eligible heat-pump projects in RG&E territory.",
+      "source_id": "src_ny_cleanheat",
+      "source_url": "https://cleanheat.ny.gov/"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_central_hudson",
+      "administrator": "Central Hudson",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "utility-specific incentive schedule based on system type, sizing, project configuration, and current program rules",
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Resolve current utility-specific amount at match time; do not infer one utility’s rate from another.",
+      "id": "ny_central_hudson_clean_heat",
+      "name": "Central Hudson NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Utility-administered NYS Clean Heat incentives for eligible heat-pump projects in Central Hudson territory.",
+      "source_id": "src_ny_cleanheat",
+      "source_url": "https://cleanheat.ny.gov/"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "administrator": "Orange & Rockland",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 100,
+      "amount_max": 15000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Tier amounts are normalized from the current program reference available during build; revalidate if O&R posts a newer manual.",
+      "id": "ny_oru_clean_heat",
+      "name": "Orange & Rockland NYS Clean Heat Incentives",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Orange & Rockland Clean Heat incentives for eligible residential air-source, ground-source, and water-heating projects; amounts depend on project category and DAC status.",
+      "source_id": "src_ny_oru_manual",
+      "source_url": "https://www.oru.com/en/save-money/rebates-incentives-credits/new-york-customers/incentives-for-residential-customers-ny/clean-heating-cooling-with-heat-pumps"
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_psegli",
+      "administrator": "PSEG Long Island",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 4000,
+      "amount_max": 7500,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": "Amounts shown for single-family whole-house tiers; multifamily/common-area rules exist separately.",
+      "id": "ny_psegli_heat_pumps",
+      "name": "PSEG Long Island Home Comfort Heat Pump Rebates",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Whole-house heat-pump rebates on Long Island with income and disadvantaged-community tiers.",
+      "source_id": "src_ny_pseg_heat",
+      "source_url": "https://www.psegliny.com/saveenergyandmoney/homeefficiency/homecomfort/heatpumps/rebates"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": null,
+      "administrator": "Florida Department of Revenue",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "purchase",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fl_solar_sales_tax_exemption",
+      "name": "Florida Solar Energy Systems Sales Tax Exemption",
+      "jurisdiction_level": "state",
+      "incentive_type": "sales_tax_exemption",
+      "amount_type": "tax_exemption",
+      "description": "Florida sales-tax exemption for qualifying solar energy systems/components under state law.",
+      "source_id": "src_fl_sales_tax",
+      "source_url": "https://www.floridarevenue.com/taxes/taxesfees/pages/sales_tax_incent.aspx"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": null,
+      "administrator": "Florida property appraisers under state statute",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "property_assessment",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "fl_renewable_property_tax_exclusion",
+      "name": "Florida Renewable Energy Property Tax Exclusion",
+      "jurisdiction_level": "state",
+      "incentive_type": "property_tax_exclusion",
+      "amount_type": "property_tax_exclusion",
+      "description": "For residential property, qualifying renewable-energy-source devices are excluded from just value for property-tax assessment under Florida law.",
+      "source_id": "src_fl_statute_property",
+      "source_url": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0193/Sections/0193.624.html"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_fpl",
+      "administrator": "Florida Power & Light",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 200,
+      "amount_max": 200,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "installer_invoice",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": null,
+      "id": "fl_fpl_ac_rebate",
+      "name": "FPL A/C Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "instant_rebate",
+      "amount_type": "flat",
+      "description": "$200 instant rebate on a qualifying new high-efficiency residential A/C or heat-pump system installed by an FPL-approved participating contractor.",
+      "source_id": "src_fpl_ac",
+      "source_url": "https://www.fpl.com/save/programs/ac-rebate.html"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "administrator": "Duke Energy Florida",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 450,
+      "amount_max": 1000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "after_home_energy_check_and_project",
+      "requires_preapproval": 1,
+      "requires_contractor": 0,
+      "notes": "Category caps normalized from current Duke program information; recheck live program page before match.",
+      "id": "fl_duke_home_energy_improvement",
+      "name": "Duke Energy Florida Home Energy Improvement Rebates",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Residential efficiency rebates available after a Duke Home Energy Check; includes HVAC, windows, attic insulation, duct repair, and heat-pump water heaters.",
+      "source_id": "src_duke_fl_home",
+      "source_url": "https://www.duke-energy.com/home/products/home-energy-improvement"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "administrator": "Tampa",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not surface as a matched dollar amount until individual programs are verified and normalized.",
+      "id": "fl_teco_discovery",
+      "name": "Tampa Electric Residential Efficiency Programs",
+      "jurisdiction_level": "utility",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known utility incentive source, not normalized for V1 matching.",
+      "source_id": "src_teco",
+      "source_url": "https://www.tampaelectric.com/residential/saveenergy/"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "administrator": "JEA",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not surface as a matched dollar amount until individual programs are verified and normalized.",
+      "id": "fl_jea_discovery",
+      "name": "JEA Residential Rebates",
+      "jurisdiction_level": "utility",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known utility incentive source, not normalized for V1 matching.",
+      "source_id": "src_jea",
+      "source_url": "https://www.jea.com/rebates"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "administrator": "OUC",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not surface as a matched dollar amount until individual programs are verified and normalized.",
+      "id": "fl_ouc_discovery",
+      "name": "OUC Residential Rebates",
+      "jurisdiction_level": "utility",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known utility incentive source, not normalized for V1 matching.",
+      "source_id": "src_ouc",
+      "source_url": "https://www.ouc.com/residential/save-energy-water-money/rebates/"
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "administrator": "GRU",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not surface as a matched dollar amount until individual programs are verified and normalized.",
+      "id": "fl_gru_discovery",
+      "name": "GRU Residential Rebates",
+      "jurisdiction_level": "utility",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known utility incentive source, not normalized for V1 matching.",
+      "source_id": "src_gru",
+      "source_url": "https://www.gru.com/My-Home/Content/Rebates-and-Incentives-for-Homes"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": null,
+      "administrator": "California Energy Commission / TECH Clean California",
+      "status": "waitlist",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 4000,
+      "amount_max": 8000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "reservation_before_project",
+      "requires_preapproval": 1,
+      "requires_contractor": 1,
+      "notes": "Retained for monitoring. Match disabled until active reservation capacity is confirmed.",
+      "id": "ca_heehra_heat_pump",
+      "name": "California HEEHRA Heat Pump HVAC Rebate",
+      "jurisdiction_level": "state",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Income-qualified single-family heat-pump HVAC rebate. Funding/reservation availability is constrained; do not present as guaranteed while fully reserved/waitlisted.",
+      "source_id": "src_ca_heehra",
+      "source_url": "https://www.energy.ca.gov/programs-and-topics/programs/inflation-reduction-act-residential-energy-rebate-programs"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": null,
+      "administrator": "CPUC / regional program administrators",
+      "status": "waitlist",
+      "publishable": 1,
+      "match_enabled": 0,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": "solar: 3.10 USD/W; storage: 1.10 USD/Wh, subject to eligibility and live funding/reservation status",
+      "claim_timing": "application_reservation",
+      "requires_preapproval": 1,
+      "requires_contractor": 0,
+      "notes": "Match disabled until current live funding status confirms actionable availability.",
+      "id": "ca_sgip_rsse",
+      "name": "SGIP Residential Solar and Storage Equity",
+      "jurisdiction_level": "state",
+      "incentive_type": "installation_rebate",
+      "amount_type": "formula",
+      "description": "Equity-focused residential solar and storage incentives under SGIP; current funding may be fully reserved with new applications waitlisted.",
+      "source_id": "src_ca_sgip",
+      "source_url": "https://www.cpuc.ca.gov/sgip"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "administrator": "PG&E",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1000,
+      "amount_max": 4000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "post_purchase",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Current page advertises up to $4,000; resolve detailed income/vehicle rules before final match.",
+      "id": "ca_pge_preowned_ev",
+      "name": "PG&E Pre-Owned EV Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "post_purchase_rebate",
+      "amount_type": "tiered",
+      "description": "PG&E rebate for qualifying pre-owned electric vehicles; higher amount available for income-qualified customers.",
+      "source_id": "src_pge_rebates",
+      "source_url": "https://www.pge.com/en/save-energy-and-money/rebates-and-incentives.html"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "administrator": "PG&E",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": 5000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "project_application",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Resolve current income, charger, and installation requirements before displaying a final amount.",
+      "id": "ca_pge_res_ev_charging",
+      "name": "PG&E Residential EV Charging Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Residential EV charging rebate advertised at up to $5,000 for income-eligible PG&E households.",
+      "source_id": "src_pge_rebates",
+      "source_url": "https://www.pge.com/en/save-energy-and-money/rebates-and-incentives.html"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sce",
+      "administrator": "Southern California Edison",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1000,
+      "amount_max": 4000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "within_180_days_of_purchase_or_lease",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "ca_sce_preowned_ev",
+      "name": "SCE Pre-Owned EV Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "post_purchase_rebate",
+      "amount_type": "tiered",
+      "description": "SCE rebate for eligible pre-owned electric vehicles, with a standard and income-qualified tier.",
+      "source_id": "src_sce_ev",
+      "source_url": "https://evrebates.sce.com/"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "administrator": "LADWP",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1500,
+      "amount_max": 4000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "post_purchase",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "ca_ladwp_used_ev",
+      "name": "LADWP Used EV Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "post_purchase_rebate",
+      "amount_type": "tiered",
+      "description": "Used EV rebate for LADWP residential customers, with enhanced rebate for qualifying low-income customers.",
+      "source_id": "src_ladwp_ev",
+      "source_url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "administrator": "LADWP",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1000,
+      "amount_max": 1750,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "post_purchase_installation",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": null,
+      "id": "ca_ladwp_res_ev_charger",
+      "name": "LADWP Residential EV Charger Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "Residential Level 2 EV charger rebate with low-income and dedicated EV time-of-use meter adders.",
+      "source_id": "src_ladwp_charger",
+      "source_url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/residential-ev-charger-rebate-program"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "administrator": "SMUD",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 2000,
+      "amount_max": 3000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": null,
+      "id": "ca_smud_heat_pump_hvac",
+      "name": "SMUD Heat Pump HVAC Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "SMUD gas-to-electric heat-pump HVAC incentives, with different amounts by equipment performance/configuration.",
+      "source_id": "src_smud_efficiency",
+      "source_url": "https://www.smud.org/Rebates-and-Savings-Tips/Improve-Home-Efficiency"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "administrator": "SMUD",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 2000,
+      "amount_max": 2000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": null,
+      "id": "ca_smud_go_electric_panel",
+      "name": "SMUD Go Electric Panel Upgrade Bonus",
+      "jurisdiction_level": "utility",
+      "incentive_type": "project_bonus",
+      "amount_type": "flat",
+      "description": "$2,000 panel-upgrade bonus for qualifying electrification projects under current SMUD Go Electric rules.",
+      "source_id": "src_smud_efficiency",
+      "source_url": "https://www.smud.org/Rebates-and-Savings-Tips/Improve-Home-Efficiency"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "administrator": "SMUD",
+      "status": "active",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": 1000,
+      "amount_max": 4000,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "contractor_project_workflow",
+      "requires_preapproval": 0,
+      "requires_contractor": 1,
+      "notes": null,
+      "id": "ca_smud_hpwh",
+      "name": "SMUD Heat Pump Water Heater Rebate",
+      "jurisdiction_level": "utility",
+      "incentive_type": "installation_rebate",
+      "amount_type": "tiered",
+      "description": "SMUD heat-pump water-heater rebate with higher gas-to-electric incentives based on tank size.",
+      "source_id": "src_smud_efficiency",
+      "source_url": "https://www.smud.org/Rebates-and-Savings-Tips/Improve-Home-Efficiency"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sdge",
+      "administrator": "SDG&E",
+      "status": "dynamic",
+      "publishable": 1,
+      "match_enabled": 1,
+      "verification_status": "primary_verified_dynamic",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": "program_enrollment",
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Noncash program. Detailed measure eligibility should be resolved from current SDG&E rules.",
+      "id": "ca_sdge_residential_energy_solutions",
+      "name": "SDG&E Residential Energy Solutions",
+      "jurisdiction_level": "utility",
+      "incentive_type": "no_cost_efficiency",
+      "amount_type": "noncash",
+      "description": "No-cost energy-efficiency upgrades for eligible households under SDG&E Residential Energy Solutions.",
+      "source_id": "src_sdge_res",
+      "source_url": "https://marketplace.sdge.com/residential/savings-center/energy-saving-programs/res-program"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": null,
+      "administrator": "TECH Clean California Heat Pump Incentives",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not show a dollar estimate until region/funding/eligibility rules are normalized.",
+      "id": "ca_tech_clean_discovery",
+      "name": "TECH Clean California Heat Pump Incentives",
+      "jurisdiction_level": "state",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known official California incentive program requiring live regional/funding normalization before V1 matching.",
+      "source_id": "src_ca_tech",
+      "source_url": "https://techcleanca.com/"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": null,
+      "administrator": "CALeVIP EV Charging Incentives",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not show a dollar estimate until region/funding/eligibility rules are normalized.",
+      "id": "ca_calevip_discovery",
+      "name": "CALeVIP EV Charging Incentives",
+      "jurisdiction_level": "state",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known official California incentive program requiring live regional/funding normalization before V1 matching.",
+      "source_id": "src_ca_calevip",
+      "source_url": "https://calevip.org/"
+    },
+    {
+      "state_code": "CA",
+      "utility_id": null,
+      "administrator": "Clean Cars 4 All",
+      "status": "discovery_only",
+      "publishable": 0,
+      "match_enabled": 0,
+      "verification_status": "discovery_only",
+      "effective_start": null,
+      "effective_end": null,
+      "last_verified_at": "2026-09-13T18:04:00-04:00",
+      "amount_min": null,
+      "amount_max": null,
+      "amount_unit": "USD",
+      "amount_formula": null,
+      "claim_timing": null,
+      "requires_preapproval": 0,
+      "requires_contractor": 0,
+      "notes": "Do not show a dollar estimate until region/funding/eligibility rules are normalized.",
+      "id": "ca_clean_cars_4_all_discovery",
+      "name": "Clean Cars 4 All",
+      "jurisdiction_level": "regional",
+      "incentive_type": "various",
+      "amount_type": "unknown",
+      "description": "Known official California incentive program requiring live regional/funding normalization before V1 matching.",
+      "source_id": "src_ca_cc4a",
+      "source_url": "https://ww2.arb.ca.gov/our-work/programs/clean-cars-4-all"
+    }
+  ],
+  "program_categories": [
+    {
+      "program_id": "fed_25c",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fed_25c",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fed_25c",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "fed_25c",
+      "category_id": "windows"
+    },
+    {
+      "program_id": "fed_25d",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "fed_25d",
+      "category_id": "battery_storage"
+    },
+    {
+      "program_id": "fed_30d",
+      "category_id": "ev_new"
+    },
+    {
+      "program_id": "fed_25e",
+      "category_id": "ev_used"
+    },
+    {
+      "program_id": "fed_30c",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ny_solar_tax_credit",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "category_id": "ev_new"
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ny_nysun_residential",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "ny_national_grid_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_national_grid_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_coned_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_coned_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_nyseg_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_nyseg_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_rge_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_rge_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_central_hudson_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_central_hudson_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_solar_sales_tax_exemption",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "fl_solar_sales_tax_exemption",
+      "category_id": "battery_storage"
+    },
+    {
+      "program_id": "fl_solar_sales_tax_exemption",
+      "category_id": "sales_tax"
+    },
+    {
+      "program_id": "fl_renewable_property_tax_exclusion",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "fl_renewable_property_tax_exclusion",
+      "category_id": "battery_storage"
+    },
+    {
+      "program_id": "fl_renewable_property_tax_exclusion",
+      "category_id": "property_tax"
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "category_id": "windows"
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "category_id": "ductwork"
+    },
+    {
+      "program_id": "fl_teco_discovery",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_teco_discovery",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fl_teco_discovery",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "fl_teco_discovery",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "fl_jea_discovery",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_jea_discovery",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fl_jea_discovery",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "fl_jea_discovery",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "fl_ouc_discovery",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_ouc_discovery",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fl_ouc_discovery",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "fl_ouc_discovery",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "fl_gru_discovery",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "fl_gru_discovery",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "fl_gru_discovery",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "fl_gru_discovery",
+      "category_id": "insulation"
+    },
+    {
+      "program_id": "ca_heehra_heat_pump",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ca_sgip_rsse",
+      "category_id": "solar"
+    },
+    {
+      "program_id": "ca_sgip_rsse",
+      "category_id": "battery_storage"
+    },
+    {
+      "program_id": "ca_pge_preowned_ev",
+      "category_id": "ev_used"
+    },
+    {
+      "program_id": "ca_pge_res_ev_charging",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ca_sce_preowned_ev",
+      "category_id": "ev_used"
+    },
+    {
+      "program_id": "ca_ladwp_used_ev",
+      "category_id": "ev_used"
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ca_smud_heat_pump_hvac",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ca_smud_go_electric_panel",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ca_smud_go_electric_panel",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ca_smud_go_electric_panel",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ca_smud_hpwh",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ca_sdge_residential_energy_solutions",
+      "category_id": "weatherization"
+    },
+    {
+      "program_id": "ca_tech_clean_discovery",
+      "category_id": "heat_pump_hvac"
+    },
+    {
+      "program_id": "ca_tech_clean_discovery",
+      "category_id": "heat_pump_water_heater"
+    },
+    {
+      "program_id": "ca_calevip_discovery",
+      "category_id": "ev_charger"
+    },
+    {
+      "program_id": "ca_clean_cars_4_all_discovery",
+      "category_id": "ev_new"
+    },
+    {
+      "program_id": "ca_clean_cars_4_all_discovery",
+      "category_id": "ev_used"
+    }
+  ],
+  "eligibility_rules": [
+    {
+      "program_id": "ny_solar_tax_credit",
+      "field": "state",
+      "operator": "eq",
+      "value_json": "\"NY\"",
+      "description": "Principal residence must be in New York.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_solar_tax_credit",
+      "field": "residence_type",
+      "operator": "eq",
+      "value_json": "\"principal_residence\"",
+      "description": "System must be installed at the taxpayer’s principal residence.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "field": "state",
+      "operator": "eq",
+      "value_json": "\"NY\"",
+      "description": "Applicant must be an eligible New York purchaser/lessee.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "field": "dealer_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Vehicle must be purchased or leased through a participating New York dealer.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "field": "vehicle_on_eligible_list",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Vehicle must appear on NYSERDA’s current eligible-model list.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nysun_residential",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Project must use a participating NY-Sun contractor for the incentive workflow.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_national_grid_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_national_grid\"",
+      "description": "Customer must be in National Grid service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_national_grid_clean_heat",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating contractor under current program rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_coned_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_coned\"",
+      "description": "Customer must be in Con Edison service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_coned_clean_heat",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating contractor under current program rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nyseg_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_nyseg\"",
+      "description": "Customer must be in NYSEG service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nyseg_clean_heat",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating contractor under current program rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_rge_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_rge\"",
+      "description": "Customer must be in RG&E service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_rge_clean_heat",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating contractor under current program rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_central_hudson_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_central_hudson\"",
+      "description": "Customer must be in Central Hudson service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_central_hudson_clean_heat",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating contractor under current program rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_oru\"",
+      "description": "Customer must be in Orange & Rockland New York service territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ny_psegli\"",
+      "description": "Customer must be in PSEG Long Island territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Use a participating Home Comfort contractor.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_solar_sales_tax_exemption",
+      "field": "state",
+      "operator": "eq",
+      "value_json": "\"FL\"",
+      "description": "Qualifying purchase must fall under Florida’s renewable-energy sales-tax exemption rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"fl_fpl\"",
+      "description": "Customer must receive residential electric service from FPL.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "field": "seer2",
+      "operator": "gte",
+      "value_json": "15.2",
+      "description": "New system must meet the current minimum SEER2 requirement.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "field": "contractor_participating",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Installation must be through an FPL-approved participating independent contractor.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"fl_duke\"",
+      "description": "Customer must be an eligible Duke Energy Florida residential customer.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "field": "home_energy_check_complete",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "A Home Energy Check must identify/recommend the qualifying improvement.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_heehra_heat_pump",
+      "field": "contractor_heehra_trained",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Project must use a TECH-certified, HEEHRA-trained contractor under current rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_heehra_heat_pump",
+      "field": "reservation_approved",
+      "operator": "eq",
+      "value_json": "true",
+      "description": "Approved reservation is required before project commitment/installation.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_pge_preowned_ev",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ca_pge\"",
+      "description": "Applicant must satisfy current PG&E customer eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_sce_preowned_ev",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ca_sce\"",
+      "description": "Applicant must satisfy current SCE customer/program eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_sce_preowned_ev",
+      "field": "days_since_purchase_or_lease",
+      "operator": "lte",
+      "value_json": "180",
+      "description": "Application must be submitted within 180 days of purchase/lease.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_ladwp_used_ev",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ca_ladwp\"",
+      "description": "Applicant must satisfy current LADWP residential-customer rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ca_ladwp\"",
+      "description": "Applicant must satisfy LADWP residential service requirements.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "field": "charger_level",
+      "operator": "eq",
+      "value_json": "2",
+      "description": "Charger must be eligible Level 2 equipment.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "field": "purchase_age_months",
+      "operator": "lte",
+      "value_json": "12",
+      "description": "Charger must satisfy current purchase-timing rule.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_smud_heat_pump_hvac",
+      "field": "utility_id",
+      "operator": "eq",
+      "value_json": "\"ca_smud\"",
+      "description": "Home must be in SMUD territory.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_smud_heat_pump_hvac",
+      "field": "fuel_switch",
+      "operator": "eq",
+      "value_json": "\"gas_to_electric\"",
+      "description": "Published incentive amounts apply to qualifying gas-to-electric conversion.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ca_smud_go_electric_panel",
+      "field": "fuel_switch",
+      "operator": "eq",
+      "value_json": "\"gas_to_electric\"",
+      "description": "Bonus requires qualifying electrification/fuel-switch project.",
+      "blocking": 1
+    }
+  ],
+  "incentive_tiers": [
+    {
+      "program_id": "ny_drive_clean",
+      "tier_key": "range_gt_200",
+      "conditions_json": "{\"epa_range_miles\":{\"gt\":200},\"base_msrp\":{\"lte\":42000}}",
+      "amount": 2000,
+      "unit": "USD",
+      "cap": null,
+      "description": "More than 200 miles EPA range and base MSRP at or below $42,000."
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "tier_key": "range_40_199",
+      "conditions_json": "{\"epa_range_miles\":{\"gte\":40,\"lte\":199},\"base_msrp\":{\"lte\":42000}}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "40 to 199 miles EPA range and base MSRP at or below $42,000."
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "tier_key": "range_lt_40",
+      "conditions_json": "{\"epa_range_miles\":{\"lt\":40},\"base_msrp\":{\"lte\":42000}}",
+      "amount": 500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Less than 40 miles EPA range."
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "tier_key": "msrp_over_42k",
+      "conditions_json": "{\"base_msrp\":{\"gt\":42000}}",
+      "amount": 500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Base MSRP above $42,000 receives $500 regardless of range, subject to current eligible-model rules."
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "tier_key": "standard_port",
+      "conditions_json": "{\"site_type\":{\"in\":[\"workplace\",\"multifamily\",\"hotel\"]},\"reserved_fleet_or_assigned\":false}",
+      "amount": 3000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Standard eligible Level 2 port."
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "tier_key": "dac_bonus",
+      "conditions_json": "{\"disadvantaged_community\":true,\"reserved_fleet_or_assigned\":false}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "$3,000 base plus $1,000 DAC bonus."
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "tier_key": "reserved_or_fleet",
+      "conditions_json": "{\"reserved_fleet_or_assigned\":true}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Assigned-space or fleet-reserved port amount."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "ccashp_wh_sf",
+      "conditions_json": "{\"system\":\"ccASHP\",\"configuration\":\"whole_home\",\"dwelling\":\"single_family\",\"dac\":false}",
+      "amount": 5000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Cold-climate ASHP whole-home, single family, non-DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "ccashp_wh_sf_dac",
+      "conditions_json": "{\"system\":\"ccASHP\",\"configuration\":\"whole_home\",\"dwelling\":\"single_family\",\"dac\":true}",
+      "amount": 6000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Cold-climate ASHP whole-home, single family, DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "ccashp_decom_sf",
+      "conditions_json": "{\"system\":\"ccASHP\",\"configuration\":\"full_load_decommission\",\"dwelling\":\"single_family\",\"dac\":false}",
+      "amount": 9000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Full-load with fossil decommissioning, single family, non-DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "ccashp_decom_sf_dac",
+      "conditions_json": "{\"system\":\"ccASHP\",\"configuration\":\"full_load_decommission\",\"dwelling\":\"single_family\",\"dac\":true}",
+      "amount": 10000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Full-load with fossil decommissioning, single family, DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "gshp_retro_sf",
+      "conditions_json": "{\"system\":\"GSHP\",\"project\":\"retrofit\",\"dwelling\":\"single_family\",\"dac\":false}",
+      "amount": 14000,
+      "unit": "USD",
+      "cap": null,
+      "description": "GSHP retrofit, single family, non-DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "gshp_retro_sf_dac",
+      "conditions_json": "{\"system\":\"GSHP\",\"project\":\"retrofit\",\"dwelling\":\"single_family\",\"dac\":true}",
+      "amount": 15000,
+      "unit": "USD",
+      "cap": null,
+      "description": "GSHP retrofit, single family, DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "gshp_new_sf",
+      "conditions_json": "{\"system\":\"GSHP\",\"project\":\"new_construction\",\"dwelling\":\"single_family\",\"dac\":false}",
+      "amount": 7000,
+      "unit": "USD",
+      "cap": null,
+      "description": "GSHP new construction, single family, non-DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "gshp_new_sf_dac",
+      "conditions_json": "{\"system\":\"GSHP\",\"project\":\"new_construction\",\"dwelling\":\"single_family\",\"dac\":true}",
+      "amount": 8000,
+      "unit": "USD",
+      "cap": null,
+      "description": "GSHP new construction, single family, DAC."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "hpwh",
+      "conditions_json": "{\"system\":\"HPWH\"}",
+      "amount": 1250,
+      "unit": "USD",
+      "cap": null,
+      "description": "Heat-pump water heater downstream incentive per unit."
+    },
+    {
+      "program_id": "ny_oru_clean_heat",
+      "tier_key": "gshp_desuperheater",
+      "conditions_json": "{\"system\":\"GSHP_desuperheater\"}",
+      "amount": 100,
+      "unit": "USD",
+      "cap": null,
+      "description": "GSHP desuperheater incentive."
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "tier_key": "low_income",
+      "conditions_json": "{\"ami_pct\":{\"lt\":60}}",
+      "amount": 7500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Whole-house single-family low-income tier."
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "tier_key": "moderate_income",
+      "conditions_json": "{\"ami_pct\":{\"gte\":60,\"lt\":80}}",
+      "amount": 5000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Whole-house single-family moderate-income tier."
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "tier_key": "market_dac",
+      "conditions_json": "{\"income_tier\":\"market\",\"dac\":true}",
+      "amount": 5000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Market-rate home in a disadvantaged community."
+    },
+    {
+      "program_id": "ny_psegli_heat_pumps",
+      "tier_key": "market",
+      "conditions_json": "{\"income_tier\":\"market\",\"dac\":false}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Market-rate whole-house single-family tier."
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "tier_key": "hvac",
+      "conditions_json": "{\"category\":\"heat_pump_hvac\"}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "HVAC replacement rebate, up to $1,000."
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "tier_key": "windows",
+      "conditions_json": "{\"category\":\"windows\"}",
+      "amount": 800,
+      "unit": "USD",
+      "cap": null,
+      "description": "Energy-efficient windows, up to $800."
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "tier_key": "attic_insulation",
+      "conditions_json": "{\"category\":\"insulation\"}",
+      "amount": 800,
+      "unit": "USD",
+      "cap": null,
+      "description": "Attic insulation, up to $800."
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "tier_key": "duct",
+      "conditions_json": "{\"category\":\"ductwork\"}",
+      "amount": 450,
+      "unit": "USD",
+      "cap": null,
+      "description": "Duct testing/repair, up to $450."
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "tier_key": "hpwh",
+      "conditions_json": "{\"category\":\"heat_pump_water_heater\"}",
+      "amount": 800,
+      "unit": "USD",
+      "cap": null,
+      "description": "Heat-pump/hybrid water heater, up to $800."
+    },
+    {
+      "program_id": "ca_heehra_heat_pump",
+      "tier_key": "under_80_ami",
+      "conditions_json": "{\"ami_pct\":{\"lt\":80}}",
+      "amount": 8000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Up to $8,000 for qualifying households below 80% AMI."
+    },
+    {
+      "program_id": "ca_heehra_heat_pump",
+      "tier_key": "80_150_ami",
+      "conditions_json": "{\"ami_pct\":{\"gte\":80,\"lte\":150}}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Up to $4,000 for qualifying households at 80-150% AMI."
+    },
+    {
+      "program_id": "ca_sce_preowned_ev",
+      "tier_key": "standard",
+      "conditions_json": "{\"income_qualified\":false}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Standard rebate."
+    },
+    {
+      "program_id": "ca_sce_preowned_ev",
+      "tier_key": "income_qualified",
+      "conditions_json": "{\"income_qualified\":true}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Income-qualified rebate."
+    },
+    {
+      "program_id": "ca_ladwp_used_ev",
+      "tier_key": "standard",
+      "conditions_json": "{\"low_income_program\":false}",
+      "amount": 1500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Standard used-EV rebate."
+    },
+    {
+      "program_id": "ca_ladwp_used_ev",
+      "tier_key": "low_income",
+      "conditions_json": "{\"low_income_program\":true}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Enhanced rebate for qualifying EZ-SAVE/Lifeline low-income customers."
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "tier_key": "base",
+      "conditions_json": "{\"low_income\":false,\"dedicated_ev_tou_meter\":false}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Base residential charger rebate."
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "tier_key": "low_income",
+      "conditions_json": "{\"low_income\":true,\"dedicated_ev_tou_meter\":false}",
+      "amount": 1500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Base plus $500 low-income adder."
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "tier_key": "base_meter",
+      "conditions_json": "{\"low_income\":false,\"dedicated_ev_tou_meter\":true}",
+      "amount": 1250,
+      "unit": "USD",
+      "cap": null,
+      "description": "Base plus $250 dedicated EV TOU meter adder."
+    },
+    {
+      "program_id": "ca_ladwp_res_ev_charger",
+      "tier_key": "low_income_meter",
+      "conditions_json": "{\"low_income\":true,\"dedicated_ev_tou_meter\":true}",
+      "amount": 1750,
+      "unit": "USD",
+      "cap": null,
+      "description": "Low-income amount plus dedicated meter adder."
+    },
+    {
+      "program_id": "ca_smud_heat_pump_hvac",
+      "tier_key": "variable_stage",
+      "conditions_json": "{\"system\":\"variable_stage\"}",
+      "amount": 3000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Variable-stage qualifying heat-pump HVAC."
+    },
+    {
+      "program_id": "ca_smud_heat_pump_hvac",
+      "tier_key": "two_stage",
+      "conditions_json": "{\"system\":\"two_stage\",\"seer2\":{\"gte\":15.2}}",
+      "amount": 2000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Qualifying two-stage system with minimum 15.2 SEER2."
+    },
+    {
+      "program_id": "ca_smud_hpwh",
+      "tier_key": "electric_to_electric",
+      "conditions_json": "{\"fuel_switch\":\"electric_to_electric\"}",
+      "amount": 1000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Electric-to-electric qualifying HPWH."
+    },
+    {
+      "program_id": "ca_smud_hpwh",
+      "tier_key": "gas_to_electric_50",
+      "conditions_json": "{\"fuel_switch\":\"gas_to_electric\",\"gallons\":{\"gte\":50,\"lt\":65}}",
+      "amount": 3000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Gas-to-electric, 50+ gallon tier."
+    },
+    {
+      "program_id": "ca_smud_hpwh",
+      "tier_key": "gas_to_electric_65",
+      "conditions_json": "{\"fuel_switch\":\"gas_to_electric\",\"gallons\":{\"gte\":65,\"lt\":80}}",
+      "amount": 3500,
+      "unit": "USD",
+      "cap": null,
+      "description": "Gas-to-electric, 65+ gallon tier."
+    },
+    {
+      "program_id": "ca_smud_hpwh",
+      "tier_key": "gas_to_electric_80",
+      "conditions_json": "{\"fuel_switch\":\"gas_to_electric\",\"gallons\":{\"gte\":80}}",
+      "amount": 4000,
+      "unit": "USD",
+      "cap": null,
+      "description": "Gas-to-electric, 80+ gallon tier."
+    }
+  ],
+  "claim_steps": [
+    {
+      "program_id": "ny_solar_tax_credit",
+      "step_order": 1,
+      "phase": "purchase",
+      "title": "Keep qualified expenditure documentation",
+      "description": "Retain invoices and system documentation.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_solar_tax_credit",
+      "step_order": 2,
+      "phase": "tax_filing",
+      "title": "Claim on New York return",
+      "description": "Claim the credit using the current NY tax form/instructions.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "step_order": 1,
+      "phase": "before_purchase",
+      "title": "Confirm eligible model and dealer",
+      "description": "Check the current NYSERDA model list and participating dealer.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_drive_clean",
+      "step_order": 2,
+      "phase": "purchase",
+      "title": "Receive rebate at dealer",
+      "description": "Participating dealer applies the rebate at the point of sale/lease.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "step_order": 1,
+      "phase": "before_install",
+      "title": "Check site and equipment eligibility",
+      "description": "Confirm site type, equipment, installer, and current funding availability.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "step_order": 2,
+      "phase": "before_install",
+      "title": "Submit required application/preapproval",
+      "description": "Do not rely on a rebate until the project satisfies current NYSERDA application rules.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_charge_ready_2",
+      "step_order": 3,
+      "phase": "after_install",
+      "title": "Submit completion documentation",
+      "description": "Rebate is paid after completion and required documentation.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nysun_residential",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Resolve current NY-Sun block",
+      "description": "Fetch/verify the live regional block and project eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nysun_residential",
+      "step_order": 2,
+      "phase": "contract",
+      "title": "Confirm incentive appears in proposal",
+      "description": "Contractor typically applies the incentive to reduce project cost.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_national_grid_clean_heat",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Verify current utility incentive",
+      "description": "Resolve the utility’s current Clean Heat schedule and equipment eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_coned_clean_heat",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Verify current utility incentive",
+      "description": "Resolve the utility’s current Clean Heat schedule and equipment eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_nyseg_clean_heat",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Verify current utility incentive",
+      "description": "Resolve the utility’s current Clean Heat schedule and equipment eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_rge_clean_heat",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Verify current utility incentive",
+      "description": "Resolve the utility’s current Clean Heat schedule and equipment eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "ny_central_hudson_clean_heat",
+      "step_order": 1,
+      "phase": "before_contract",
+      "title": "Verify current utility incentive",
+      "description": "Resolve the utility’s current Clean Heat schedule and equipment eligibility.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "step_order": 1,
+      "phase": "before_purchase",
+      "title": "Use an FPL participating contractor",
+      "description": "Contractor validates equipment and rebate eligibility before installation.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_fpl_ac_rebate",
+      "step_order": 2,
+      "phase": "purchase",
+      "title": "Receive instant invoice credit",
+      "description": "Rebate is applied through the participating contractor.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "step_order": 1,
+      "phase": "before_project",
+      "title": "Complete Home Energy Check",
+      "description": "Complete the Duke Home Energy Check and obtain recommended measures.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "step_order": 2,
+      "phase": "project",
+      "title": "Complete qualifying improvement",
+      "description": "Use equipment/work that satisfies the current measure requirements.",
+      "blocking": 1
+    },
+    {
+      "program_id": "fl_duke_home_energy_improvement",
+      "step_order": 3,
+      "phase": "after_project",
+      "title": "Submit rebate documentation",
+      "description": "Submit required documentation within the program window.",
+      "blocking": 1
+    }
+  ],
+  "stacking_rules": [
+    {
+      "program_a": "ny_nysun_residential",
+      "program_b": "ny_solar_tax_credit",
+      "relationship": "stackable",
+      "notes": "NY-Sun project incentive and NY residential solar tax credit may both apply; tax basis treatment should follow current tax guidance.",
+      "verified": 1
+    },
+    {
+      "program_a": "fl_solar_sales_tax_exemption",
+      "program_b": "fl_renewable_property_tax_exclusion",
+      "relationship": "stackable",
+      "notes": "Sales-tax exemption and property-tax exclusion address different tax bases and can generally coexist when the same qualifying system meets both statutory definitions.",
+      "verified": 1
+    },
+    {
+      "program_a": "ca_smud_heat_pump_hvac",
+      "program_b": "ca_smud_go_electric_panel",
+      "relationship": "conditional",
+      "notes": "Panel bonus may stack with qualifying electrification work when current SMUD Go Electric rules are met.",
+      "verified": 1
+    },
+    {
+      "program_a": "ca_smud_hpwh",
+      "program_b": "ca_smud_go_electric_panel",
+      "relationship": "conditional",
+      "notes": "Panel bonus may stack with qualifying electrification work when current SMUD Go Electric rules are met.",
+      "verified": 1
+    },
+    {
+      "program_a": "ca_heehra_heat_pump",
+      "program_b": "ca_smud_heat_pump_hvac",
+      "relationship": "may_stack",
+      "notes": "Potential interaction depends on live HEEHRA and SMUD rules and project cost limits. Revalidate before calculating combined savings.",
+      "verified": 0
+    }
+  ],
+  "coverage": [
+    {
+      "state_code": "NY",
+      "utility_id": "ny_national_grid",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_national_grid",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_national_grid",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_national_grid",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_coned",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_coned",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_coned",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_coned",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_nyseg",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_nyseg",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_nyseg",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_nyseg",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_rge",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_rge",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_rge",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_rge",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_central_hudson",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_central_hudson",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_central_hudson",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_central_hudson",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "NYS Clean Heat; utility-specific current amount required."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean is statewide subject to eligible model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_oru",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun live block plus NY state tax credit."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_psegli",
+      "category_id": "heat_pump_hvac",
+      "status": "verified",
+      "notes": "PSEG Long Island Home Comfort tiers normalized."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_psegli",
+      "category_id": "ev_new",
+      "status": "verified",
+      "notes": "Drive Clean statewide subject to model/dealer."
+    },
+    {
+      "state_code": "NY",
+      "utility_id": "ny_psegli",
+      "category_id": "solar",
+      "status": "verified_dynamic",
+      "notes": "NY-Sun/state tax credit; Long Island-specific project details require current confirmation."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_fpl",
+      "category_id": "heat_pump_hvac",
+      "status": "verified",
+      "notes": "FPL current A/C/heat-pump rebate normalized."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "category_id": "heat_pump_hvac",
+      "status": "verified_dynamic",
+      "notes": "Duke Home Energy Improvement normalized; live requirements should be checked."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified_dynamic",
+      "notes": "Duke Home Energy Improvement normalized; live requirements should be checked."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "category_id": "insulation",
+      "status": "verified_dynamic",
+      "notes": "Duke Home Energy Improvement normalized; live requirements should be checked."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "category_id": "windows",
+      "status": "verified_dynamic",
+      "notes": "Duke Home Energy Improvement normalized; live requirements should be checked."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_duke",
+      "category_id": "ductwork",
+      "status": "verified_dynamic",
+      "notes": "Duke Home Energy Improvement normalized; live requirements should be checked."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "category_id": "heat_pump_hvac",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "category_id": "heat_pump_water_heater",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "category_id": "ev_charger",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_teco",
+      "category_id": "insulation",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "category_id": "heat_pump_hvac",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "category_id": "heat_pump_water_heater",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "category_id": "ev_charger",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_jea",
+      "category_id": "insulation",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "category_id": "heat_pump_hvac",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "category_id": "heat_pump_water_heater",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "category_id": "ev_charger",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_ouc",
+      "category_id": "insulation",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "category_id": "heat_pump_hvac",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "category_id": "heat_pump_water_heater",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "category_id": "ev_charger",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": "fl_gru",
+      "category_id": "insulation",
+      "status": "discovery_only",
+      "notes": "Official utility source known but individual programs not normalized for V1."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": null,
+      "category_id": "solar",
+      "status": "verified",
+      "notes": "State sales/property tax treatment normalized; local/utility solar cash rebates not comprehensively covered."
+    },
+    {
+      "state_code": "FL",
+      "utility_id": null,
+      "category_id": "battery_storage",
+      "status": "partial",
+      "notes": "State tax treatment may apply; utility/local incentives not comprehensive."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "category_id": "ev_used",
+      "status": "verified_dynamic",
+      "notes": "PG&E advertises pre-owned EV rebate; detailed eligibility should resolve live."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "category_id": "ev_charger",
+      "status": "verified_dynamic",
+      "notes": "PG&E income-eligible charging rebate; resolve live requirements."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sce",
+      "category_id": "ev_used",
+      "status": "verified",
+      "notes": "SCE pre-owned EV rebate normalized."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "category_id": "ev_used",
+      "status": "verified",
+      "notes": "LADWP used EV rebate normalized."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_ladwp",
+      "category_id": "ev_charger",
+      "status": "verified",
+      "notes": "LADWP residential charger tiers normalized."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "category_id": "heat_pump_hvac",
+      "status": "verified",
+      "notes": "SMUD current heat-pump HVAC tiers normalized."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "category_id": "heat_pump_water_heater",
+      "status": "verified",
+      "notes": "SMUD HPWH tiers normalized."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_smud",
+      "category_id": "ev_charger",
+      "status": "partial",
+      "notes": "Panel upgrade bonus exists but a general charger incentive is not fully normalized here."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sdge",
+      "category_id": "weatherization",
+      "status": "verified_dynamic",
+      "notes": "No-cost Residential Energy Solutions; detailed measure rules dynamic."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "category_id": "solar",
+      "status": "partial",
+      "notes": "SGIP/solar layers are live-funding dependent; CCA/regional layers not complete."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_pge",
+      "category_id": "battery_storage",
+      "status": "partial",
+      "notes": "SGIP funding/reservation status and regional layers require live resolution."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sce",
+      "category_id": "solar",
+      "status": "partial",
+      "notes": "SGIP/solar layers are live-funding dependent; CCA/regional layers not complete."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sce",
+      "category_id": "battery_storage",
+      "status": "partial",
+      "notes": "SGIP funding/reservation status and regional layers require live resolution."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sdge",
+      "category_id": "solar",
+      "status": "partial",
+      "notes": "SGIP/solar layers are live-funding dependent; CCA/regional layers not complete."
+    },
+    {
+      "state_code": "CA",
+      "utility_id": "ca_sdge",
+      "category_id": "battery_storage",
+      "status": "partial",
+      "notes": "SGIP funding/reservation status and regional layers require live resolution."
+    }
+  ]
 }
