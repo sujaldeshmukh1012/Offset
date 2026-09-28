@@ -4,6 +4,8 @@ struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var notifications: NotificationService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var showOneSignalIntegrationAlert = false
+    @State private var hasShownOneSignalIntegrationAlert = false
 
     var body: some View {
         Group {
@@ -17,6 +19,9 @@ struct ContentView: View {
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: appState.rootRoute)
         .tint(OffsetTheme.emerald)
         .preferredColorScheme(.light)
+        .onAppear {
+            notifications.announceOneSignalRegistrationIfAvailable()
+        }
         .onOpenURL { url in
             if let route = NotificationRoute.parse(url: url) {
                 appState.openNotificationRoute(route)
@@ -26,6 +31,22 @@ struct ContentView: View {
             if let route = notification.object as? NotificationRoute {
                 appState.openNotificationRoute(route)
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .offsetOneSignalRegistrationCompleted)) { _ in
+            guard _isDebugAssertConfiguration() else { return }
+            guard !hasShownOneSignalIntegrationAlert else { return }
+            hasShownOneSignalIntegrationAlert = true
+            showOneSignalIntegrationAlert = true
+        }
+        .alert(
+            "Your OneSignal SDK integration is complete!",
+            isPresented: $showOneSignalIntegrationAlert
+        ) {
+            Button("Got it") {
+                Task { _ = await notifications.requestPermission() }
+            }
+        } message: {
+            Text("You can now send Push Notifications & In-App Messages through OneSignal. Tap below to enable push notifications.")
         }
         .sheet(item: $appState.notificationRoute) { route in
             NotificationDestinationView(route: route)

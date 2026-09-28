@@ -241,6 +241,11 @@ final class NotificationService: ObservableObject {
         pushSubscriptionID = isOneSignalConfigured ? OneSignalManager.shared.pushSubscriptionID : nil
     }
 
+    func announceOneSignalRegistrationIfAvailable() {
+        guard isOneSignalConfigured else { return }
+        OneSignalManager.shared.announceRegistrationIfAvailable()
+    }
+
     func synchronize(context: NotificationSyncContext) async {
         await refreshStatus()
         let programs: [Program]
