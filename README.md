@@ -15,7 +15,10 @@
     <img src="https://img.youtube.com/vi/bMc3Vl0aYr8/maxresdefault.jpg" alt="Watch the Offset product demo" width="760" />
   </a>
   <br />
-  <sub><a href="https://www.youtube.com/watch?v=bMc3Vl0aYr8">Watch the product demo on YouTube</a></sub>
+  <!-- <sub><a href="https://www.youtube.com/watch?v=bMc3Vl0aYr8">Watch the product demo on YouTube</a></sub> -->
+
+  <iframe width="560" height="315" src="https://img.youtube.com/vi/bMc3Vl0aYr8/maxresdefault.jpg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 </div>
 
 ## What it does
