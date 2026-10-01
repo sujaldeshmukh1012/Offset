@@ -57,6 +57,8 @@
 	<string>$(SUPABASE_PUBLISHABLE_KEY)</string>
 	<key>SupabasePremiumCatalogFunction</key>
 	<string>$(SUPABASE_PREMIUM_CATALOG_FUNCTION)</string>
+	<key>SourceDistributionBuild</key>
+	<string>$(SOURCE_DISTRIBUTION_BUILD)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -12,6 +12,7 @@ struct AppConfiguration: Equatable, Sendable {
         case supabaseURL = "SupabaseURL"
         case supabasePublishableKey = "SupabasePublishableKey"
         case supabasePremiumCatalogFunction = "SupabasePremiumCatalogFunction"
+        case sourceDistributionBuild = "SourceDistributionBuild"
     }
 
     let revenueCatAPIKey: String?
@@ -24,6 +25,7 @@ struct AppConfiguration: Equatable, Sendable {
     let supabaseURL: URL?
     let supabasePublishableKey: String?
     let supabasePremiumCatalogFunction: String
+    let isSourceDistributionBuild: Bool
 
     var revenueCatProductIDs: [String] {
         [revenueCatMonthlyProductID, revenueCatAnnualProductID]
@@ -55,6 +57,15 @@ struct AppConfiguration: Equatable, Sendable {
         supabasePremiumCatalogFunction = Self.configuredValue(
             values[Key.supabasePremiumCatalogFunction.rawValue]
         ) ?? "premium-catalog"
+#if DEBUG
+        isSourceDistributionBuild = Self.configuredBool(
+            values[Key.sourceDistributionBuild.rawValue]
+        )
+#else
+        // App Store builds can never enable source-distribution access, even if
+        // a build setting is accidentally or maliciously overridden.
+        isSourceDistributionBuild = false
+#endif
     }
 
     private static func requiredValue(_ rawValue: Any?, key _: Key) -> String {
@@ -86,5 +97,11 @@ struct AppConfiguration: Equatable, Sendable {
               url.path.isEmpty || url.path == "/",
               url.host?.hasSuffix(".supabase.co") == true else { return nil }
         return url
+    }
+
+    private static func configuredBool(_ rawValue: Any?) -> Bool {
+        if let value = rawValue as? Bool { return value }
+        guard let value = rawValue as? String else { return false }
+        return ["yes", "true", "1"].contains(value.lowercased())
     }
 }

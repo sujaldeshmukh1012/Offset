@@ -5,6 +5,13 @@
 REVENUECAT_API_KEY =
 ONESIGNAL_APP_ID = REPLACE_WITH_ONESIGNAL_APP_ID
 
+// GitHub/source builds intentionally include Premium access. These are public
+// client credentials; all privileged catalog access remains inside Supabase.
+SOURCE_DISTRIBUTION_BUILD = YES
+SUPABASE_URL = https:/$()/lhegojcnghbtrjekpfkz.supabase.co
+SUPABASE_PUBLISHABLE_KEY = sb_publishable_62Be3wDaboi4uMajrGlB3A_O2-02JK5
+SUPABASE_PREMIUM_CATALOG_FUNCTION = community-catalog
+
 APS_ENVIRONMENT = development
 
 // Free/Personal Teams cannot sign the APNs entitlement. This keeps Debug

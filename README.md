@@ -33,11 +33,15 @@ Requires Xcode and an iOS 16+ simulator or device.
 ```bash
 git clone https://github.com/sujaldeshmukh1012/Offset.git
 cd Offset
-cp Offset/Configuration/Secrets.example.xcconfig Offset/Configuration/Secrets.xcconfig
 open Offset.xcodeproj
 ```
 
-Configure the service values in `Secrets.xcconfig`, then build the `Offset` scheme.
+Build the `Offset` scheme with the Debug configuration. Source builds include
+Premium access and fetch the current catalog through an authenticated community
+endpoint. No private API keys are stored in the app or repository.
+
+App Store Release builds remain subscription-gated and use the separate
+entitlement-verifying catalog endpoint.
 
 ---
 

@@ -70,6 +70,10 @@ final class SubscriptionService: ObservableObject {
             applyAccess(.free)
             return
         }
+        if configuration.isSourceDistributionBuild {
+            applyAccess(.active(expirationDate: nil, willRenew: false, isTrial: false))
+            return
+        }
 #else
         isUITestPurchaseMode = false
         isUITestRestoreMode = false

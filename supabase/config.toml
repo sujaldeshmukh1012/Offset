@@ -1,2 +1,5 @@
 [functions.premium-catalog]
 verify_jwt = true
+
+[functions.community-catalog]
+verify_jwt = true
